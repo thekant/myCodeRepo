@@ -12,6 +12,7 @@ package com.kant.datastructure.stacks;
 public class ReverseStackUsingRecurssion {
 
 	/**
+	 * TESTED
 	 * 
 	 * @param stack
 	 */
