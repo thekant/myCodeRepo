@@ -16,10 +16,20 @@ public class ReverseStackUsingRecurssion {
 	 * 
 	 * @param stack
 	 */
-	public void reverseStack(StackListImplementation<String> stack) {
+	public void reverseStack(Stack<String> stack) {
 		if (!stack.isEmpty()) {
 			String temp = stack.pop();
 			reverseStack(stack);
+			insertAtBottom(stack, temp);
+		}
+	}
+
+	private void insertAtBottom(Stack<String> stack, String data) {
+		if (stack.isEmpty()) {
+			stack.push(data);
+		} else {
+			String temp = stack.pop();
+			insertAtBottom(stack, data);
 			stack.push(temp);
 		}
 	}
