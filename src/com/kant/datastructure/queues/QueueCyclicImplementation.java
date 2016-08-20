@@ -12,6 +12,10 @@ public class QueueCyclicImplementation extends AbstractQueue<String> {
 	private int rearIdx;
 	private String[] dataStore;
 
+	/**
+	 * 
+	 * @param capacity
+	 */
 	public QueueCyclicImplementation(int capacity) {
 		super(capacity);
 		dataStore = new String[capacity];
