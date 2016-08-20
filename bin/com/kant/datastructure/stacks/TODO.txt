@@ -1,4 +1,0 @@
-TODO:
-
-1. http://www.geeksforgeeks.org/efficiently-implement-k-stacks-single-array/
-2. Thread Safe Stack [Advanced : look jdk's implementation] 
