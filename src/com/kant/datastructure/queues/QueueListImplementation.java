@@ -12,8 +12,8 @@ import com.kant.datastructure.list.ListNode;
  * @author shaskant
  *
  */
-public class QueueListImplementation extends AbstractQueue<String> {
-	private ListNode<String> front, rear;
+public class QueueListImplementation<T> extends AbstractQueue<T> {
+	private ListNode<T> front, rear;
 
 	/**
 	 * capacity will be ignored
@@ -26,30 +26,33 @@ public class QueueListImplementation extends AbstractQueue<String> {
 	}
 
 	@Override
-	public void enQueue(String data) throws OverFlowException {
-		ListNode<String> temp = new ListNode<>(data);
+	public void enQueue(T data) throws OverFlowException {
+		ListNode<T> temp = new ListNode<>(data);
+		size++;
 		if (rear == null) {
 			rear = front = temp;
 			return;
 		}
 		rear.setNext(temp);
 		rear = temp;
-		size++;
+
 	}
 
 	@Override
-	public String deQueue() throws UnderFlowException {
+	public T deQueue() throws UnderFlowException {
 		if (isEmpty()) {
 			throw new UnderFlowException("no items on queue");
 		}
-		String data = front.getData();
+		T data = front.getData();
 		front = front.getNext();
 		size--;
+		if (size == 0)
+			rear = null;
 		return data;
 	}
 
 	@Override
-	public String getFront() throws UnderFlowException {
+	public T getFront() throws UnderFlowException {
 		if (isEmpty()) {
 			throw new UnderFlowException("no items on queue");
 		}
@@ -57,7 +60,7 @@ public class QueueListImplementation extends AbstractQueue<String> {
 	}
 
 	@Override
-	public String getRear() throws UnderFlowException {
+	public T getRear() throws UnderFlowException {
 		if (isEmpty()) {
 			throw new UnderFlowException("no items on queue");
 		}
@@ -66,7 +69,7 @@ public class QueueListImplementation extends AbstractQueue<String> {
 
 	@Override
 	protected boolean isEmpty() {
-		return (front == null) ? true : false;
+		return (front == null && rear == null) ? true : false;
 	}
 
 	@Override
@@ -75,7 +78,7 @@ public class QueueListImplementation extends AbstractQueue<String> {
 	}
 
 	public static void main(String[] args) throws OverFlowException {
-		QueueListImplementation queue = new QueueListImplementation();
+		QueueListImplementation<String> queue = new QueueListImplementation<String>();
 		queue.enQueue("this");
 		queue.enQueue("is");
 		queue.enQueue("shashi");

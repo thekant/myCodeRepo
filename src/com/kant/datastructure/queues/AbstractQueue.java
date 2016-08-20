@@ -9,17 +9,19 @@ package com.kant.datastructure.queues;
  */
 public abstract class AbstractQueue<T> implements Queue<T> {
 	protected int size;
-	protected int capacity; //default to -1 leads unlimited size
+	protected int capacity; // default to -1 leads unlimited size
 
 	/**
 	 * 
 	 */
 	public AbstractQueue(int capacity) {
 		this.capacity = capacity;
+		size = 0;
 	}
 
 	public AbstractQueue() {
 		this.capacity = -1;
+		size = 0;
 	}
 
 	protected boolean isEmpty() {

@@ -1,7 +1,43 @@
 Using Heaps:
+---------------
 Heap is generally preferred for priority queue implementation because heaps provide better performance compared arrays or linked list. In a Binary Heap, getHighestPriority() can be implemented in O(1) time, insert() can be implemented in O(Logn) time and deleteHighestPriority() can also be implemented in O(Logn) time.
 With Fibonacci heap, insert() and getHighestPriority() can be implemented in O(1) amortized time and deleteHighestPriority() can be implemented in O(Logn) amortized time.
 Applications of Priority Queue:
 1) CPU Scheduling
 2) Graph algorithms like Dijkstra’s shortest path algorithm, Prim’s Minimum Spanning Tree, etc
 3) All queue applications where priority is involved.
+
+
+
+http://www.geeksforgeeks.org/efficiently-implement-k-queues-single-array/
+
+
+================================================
+Implement Queue using two stacks
+================================================
+Method 1 (By making enQueue operation costly)
+------------------------------------------------
+This method makes sure that oldest entered element is always at the top of stack 1, so that deQueue operation just pops from stack1. To put the element at top of stack1, stack2 is used.
+
+enQueue(q, x)
+  1) While stack1 is not empty, push everything from stack1 to stack2.
+  2) Push x to stack1 (assuming size of stacks is unlimited).
+  3) Push everything back to stack1.
+
+deQueue(q)
+  1) If stack1 is empty then error
+  2) Pop an item from stack1 and return it
+
+
+Method 2 (By making deQueue operation costly)
+------------------------------------------------
+In this method, in en-queue operation, the new element is entered at the top of stack1. In de-queue operation, if stack2 is empty then all the elements are moved to stack2 and finally top of stack2 is returned.
+
+enQueue(q,  x)
+  1) Push x to stack1 (assuming size of stacks is unlimited).
+
+deQueue(q)
+  1) If both stacks are empty then error.
+  2) If stack2 is empty
+       While stack1 is not empty, push everything from satck1 to stack2.
+  3) Pop the element from stack2 and return it.

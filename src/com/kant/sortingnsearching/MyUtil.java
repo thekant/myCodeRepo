@@ -17,6 +17,10 @@ public class MyUtil {
 	 * @param data
 	 */
 	public static <T> void printArrayType(T[] data) {
+		if (data == null) {
+			System.out.println("Null Array");
+			return;
+		}
 		for (int i = 0; i < data.length; i++) {
 			if (i != 0)
 				System.out.print(" ");

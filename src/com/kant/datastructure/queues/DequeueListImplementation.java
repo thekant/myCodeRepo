@@ -23,6 +23,7 @@ public class DequeueListImplementation<T> extends AbstractQueue<T> implements
 	@Override
 	public void enQueue(T data) throws OverFlowException {
 		ListDNode<T> temp = new ListDNode<>(data);
+		size++;
 		if (isEmpty()) {
 			rear = front = temp;
 			return;
@@ -30,7 +31,6 @@ public class DequeueListImplementation<T> extends AbstractQueue<T> implements
 		rear.setNext(temp);
 		temp.setPrev(rear);
 		rear = temp;
-		size++;
 	}
 
 	@Override
