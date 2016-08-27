@@ -1,0 +1,36 @@
+1. http://quiz.geeksforgeeks.org/binary-tree-set-3-types-of-binary-tree/ 
+
+---------------------------------------------------------------------------
+Full Binary Tree: A Binary Tree is full if every node has 0 or 2 children
+In a Full Binary, number of leaf nodes is number of internal nodes plus 1
+       L = I + 1
+----------------------------------------------------------------------------
+Complete Binary Tree: A Binary Tree is complete Binary Tree if all levels
+ are completely filled except possibly the last level and the last level has 
+ all keys as left as possible.
+ 
+ e.g. HEAP
+ -----------------------------------------------------------------------------
+Perfect Binary Tree: A Binary tree is Perfect Binary Tree in which all internal 
+nodes have two children and all leaves are at same level.
+A Perfect Binary Tree of height h (where height is number of nodes on path from root to leaf) 
+has 2h – 1 node.
+-------------------------------------------------------------------------------
+Balanced Binary Tree:
+A binary tree is balanced if height of the tree is O(Log n) where n is number of nodes.
+ For Example, AVL tree maintain O(Log n) height by making sure that the difference 
+ between heights of left and right subtrees is 1. Red-Black trees maintain O(Log n)
+ height by making sure that the number of Black nodes on every root to leaf paths are
+ same and there are no adjacent red nodes. Balanced Binary Search trees are 
+ performance wise good as they provide O(log n) time for search, insert and delete.
+----------------------------------------------------------------------------------
+
+In a k-ary tree where every node has either 0 or k children, following property is always true.
+
+  L = (k - 1)*I + 1
+Where L = Number of leaf nodes
+      I = Number of internal nodes  
+      
+--------------------------------------------------------------------------------
+  
+   
