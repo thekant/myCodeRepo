@@ -9,7 +9,6 @@ package com.kant.datastructure.binarytrees;
  */
 public abstract class BinaryTree<T> {
 	protected TreeNode<T> root;
-	private Traversal<T> traverser;
 
 	/**
 	 * 
@@ -24,12 +23,7 @@ public abstract class BinaryTree<T> {
 	 * @param node
 	 */
 	public BinaryTree(TreeNode<T> node) {
-		this(node, new BFSTraversal<>());
-	}
-
-	public BinaryTree(TreeNode<T> node, Traversal<T> traversalImpl) {
-		root = node;
-		traverser = traversalImpl;
+		this.root = node;
 	}
 
 	public TreeNode<T> getRoot() {
@@ -96,6 +90,29 @@ public abstract class BinaryTree<T> {
 		preOrderDisplay(root);
 	}
 
+	/**
+	 * Level order or BFS
+	 */
+	public void traverseLevelOrder() {
+		System.out.println("Printing Level Order:");
+		for (int d = 0; d < getHeightMax(); d++) {
+			printThisLevel(getRoot(), d);
+			System.out.println();
+		}
+	}
+
+	private void printThisLevel(TreeNode<T> node, int d) {
+		if (node != null) {
+			if (d == 0) {
+				System.out.print(node.getData() + " ");
+				return;
+			} else if (d > 0) {
+				printThisLevel(node.getLeft(), d - 1);
+				printThisLevel(node.getRight(), d - 1);
+			}
+		}
+	}
+
 	private void inOrderDisplay(TreeNode<T> node) {
 		if (node != null) {
 			inOrderDisplay(node.getLeft());
@@ -118,14 +135,6 @@ public abstract class BinaryTree<T> {
 			preOrderDisplay(node.getLeft());
 			preOrderDisplay(node.getRight());
 		}
-	}
-
-	public Traversal<T> getTraverser() {
-		return traverser;
-	}
-
-	public void setTraverser(Traversal<T> traverser) {
-		this.traverser = traverser;
 	}
 
 }

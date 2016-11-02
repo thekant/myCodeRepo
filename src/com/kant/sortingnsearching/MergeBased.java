@@ -19,25 +19,15 @@ public class MergeBased {
 	 * @param dA2
 	 * @return
 	 */
-	public static int[] mergeTwoArrays(int[] dA1, int[] dA2) {
-		if (dA1 == null && dA2 == null)
-			return null;
-		else if (dA1 == null && dA2 != null)
+	public static int[] merge(int[] dA1, int[] dA2) {
+
+		if (dA1 == null || dA1.length == 0)
 			return dA2;
-		else if (dA1 != null && dA2 == null)
+		else if (dA2 == null || dA2.length == 0)
 			return dA1;
-		if (dA1.length > dA2.length) {
-			int[] temp = dA1;
-			dA1 = dA2;
-			dA2 = temp;
-		}
+
 		int[] mA = new int[dA1.length + dA2.length];
 		Arrays.fill(mA, -1);
-
-		System.out.print("Input1: ");
-		MyUtil.printArrayInt(dA1);
-		System.out.print("Input2: ");
-		MyUtil.printArrayInt(dA2);
 
 		int x1 = 0, x2 = 0, x3 = 0;
 		for (; x1 < dA1.length && x2 < dA2.length;) {
@@ -65,41 +55,19 @@ public class MergeBased {
 	/**
 	 * 
 	 * @param data
-	 * @param low
-	 * @param high
 	 * @return
 	 */
-	public static int[] mergesort(int[] data, int low, int high) {
-		int mid = -1;
-		if (low < high) {
-			mid = low + (high - low) / 2;
+	public static int[] mergeSort(int[] data) {
+		if (data.length <= 1)
+			return data;
+		int mid = (int) Math.ceil(data.length / 2);
+		int[] first = new int[mid];
+		int[] second = new int[data.length - first.length];
 
-			mergesort(data, low, mid);
-			mergesort(data, mid + 1, high);
-			mergeUp(data, low, mid, high);
-		}
+		System.arraycopy(data, 0, first, 0, first.length);
+		System.arraycopy(data, first.length, second, 0, second.length);
 
-		return data;
-	}
-
-	/**
-	 * 1 2 [3] 4 5 6 [mid-low+1 ]=>(2-0 +1) & [high - mid]=>(5-2) 1 2 [3] 4 5
-	 * =>(2-0+1) & (4-2)
-	 * 
-	 * @param data
-	 * @param low
-	 * @param mid
-	 * @param high
-	 */
-	private static void mergeUp(int[] data, int low, int mid, int high) {
-		int[] lowA = MyUtil.getAnotherSubCopyOf(data, low, mid+1);
-		int[] highA = MyUtil.getAnotherSubCopyOf(data, mid + 1, high+1);
-
-		int[] result = mergeTwoArrays(lowA, highA);
-		int count = low;
-		for (int i = 0; i < result.length; i++) {
-			data[count++] = result[i];
-		}
+		return merge(mergeSort(first), mergeSort(second));
 	}
 
 	/**
@@ -110,10 +78,11 @@ public class MergeBased {
 		int[] data2 = { 0, 2, 4, 6, 8 };
 
 		System.out.print("Output: ");
-		MyUtil.printArrayInt(mergeTwoArrays(data1, data2));
+		MyUtil.printArrayInt(merge(data1, data2));
 
 		int[] data3 = { 3, 1, 5, 7, 11, 15, 11 };
-		MyUtil.printArrayInt(mergesort(data3, 0, data3.length - 1));
+		// MyUtil.printArrayInt(mergesort(data3, 0, data3.length - 1));
+		MyUtil.printArrayInt(mergeSort(data3));
 		/**
 		 * test code
 		 */
