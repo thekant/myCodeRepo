@@ -3,6 +3,8 @@
  */
 package com.kant.datastructure.binarytrees;
 
+import java.util.Stack;
+
 /**
  * @author shaskant
  *
@@ -134,6 +136,43 @@ public abstract class BinaryTree<T> {
 			System.out.print(node.getData() + " ");
 			preOrderDisplay(node.getLeft());
 			preOrderDisplay(node.getRight());
+		}
+	}
+
+	/**
+	 * printing spirally
+	 */
+	public void printSpiral() {
+		System.out.print("\nPrinting spiral order: ");
+		Stack<TreeNode<T>> stack1 = new Stack<>();
+		Stack<TreeNode<T>> stack2 = new Stack<>();
+		stack1.push(root);
+
+		while (!stack1.isEmpty()) {
+			System.out.println();
+			while (!stack1.isEmpty()) {
+				TreeNode<T> cur = stack1.pop();
+				System.out.print(cur.getData()+" ");
+
+				if (cur.getLeft() != null) {
+					stack2.push(cur.getLeft());
+				}
+				if (cur.getRight() != null) {
+					stack2.push(cur.getRight());
+				}
+			}
+
+			System.out.println();
+			while (!stack2.isEmpty()) {
+				TreeNode<T> cur = stack2.pop();
+				System.out.print(cur.getData()+" ");
+				if (cur.getRight() != null) {
+					stack1.push(cur.getRight());
+				}
+				if (cur.getLeft() != null) {
+					stack1.push(cur.getLeft());
+				}
+			}
 		}
 	}
 

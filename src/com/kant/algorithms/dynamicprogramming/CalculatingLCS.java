@@ -6,12 +6,19 @@ package com.kant.algorithms.dynamicprogramming;
 import java.util.Arrays;
 
 /**
+ * 
+ * This problem is Longest Common Subsequence [i.e we can leave a character in
+ * between]<br/>
+ * LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3.<br/>
+ * LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
+ * 
  * @author shaskant
  *
  */
 public class CalculatingLCS {
 
-	protected int[][] mstore=null;
+	protected int[][] mstore = null;
+
 	/**
 	 * Non-Dynamic approach
 	 * 
@@ -31,7 +38,8 @@ public class CalculatingLCS {
 	}
 
 	/**
-	 *  Dynamic programming approach with tabulation {params l & m and hence 2d array} 
+	 * Dynamic programming approach with tabulation {params l & m and hence 2d
+	 * array}
 	 */
 	public int getLCS(String strL, int l, String strM, int m) {
 		prepareForTabulation(l, m);

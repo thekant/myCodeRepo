@@ -79,5 +79,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 		}
 		tree.traverseLevelOrder();
 		//tree.traversePreOrder();
+		tree.printSpiral();
 	}
 }
