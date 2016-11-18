@@ -91,6 +91,9 @@ public class Graph_TopoLogicalSort {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void topologicalTraverse() {
 		boolean[] visited = new boolean[V];
 		Stack<Integer> stack = new Stack<>();
