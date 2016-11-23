@@ -18,7 +18,7 @@ public class Line {
 	 */
 	public Line(GraphPoint p1, GraphPoint p2) {
 		// normal slope case
-		if (Math.abs(p2.x - p1.x) > epsilon) {
+		if (!isEqual(p1.x, p2.x)) {
 			setSlope((p2.y - p1.y) / (p2.x - p1.y));
 			setIntercept(p1.y - getSlope() * p1.x);
 		} else {// infinite slope

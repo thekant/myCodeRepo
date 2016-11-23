@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.kant.general;
+package com.kant.algorithms.dynamicprogramming;
 
 import java.util.Arrays;
 
