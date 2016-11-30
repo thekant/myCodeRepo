@@ -63,8 +63,9 @@ public class RotAllOrangesInMatrix_BFS {
 			}
 		}
 
-		// Separate these rotten oranges from the oranges which will rotten
-		// due the oranges in first time frame using delimiter which is (-1, -1)
+		// Separate these rotten oranges from the oranges which will rot
+		// because of the oranges in first time frame using delimiter which is
+		// (-1, -1)
 		queue.enQueue(new Point(-1, -1));
 
 		// Process the grid while there are rotten oranges in the Queue
@@ -73,70 +74,41 @@ public class RotAllOrangesInMatrix_BFS {
 			// orange gets rotten due to rotten oranges in current time
 			// frame so we can increase the count of the required time.
 			boolean flag = false;
+			int[] rows = { -1, 0, 1, 0 };
+			int[] cols = { 0, -1, 0, 1 };
 
 			// Process all the rotten oranges in current time frame.
-			while (!isdelim(queue.getFront())) {
+			while (!queue.getFront().isDelimiter()) {
 				Point temp = queue.getFront();
-				// right
-				if (isValid(temp.x + 1, temp.y)
-						&& data[temp.x + 1][temp.y] == 1) {
-					if (!flag) {
-						ans++;
-						flag = true;
+				// spread in all 4 directions
+				for (int k = 0; k < 4; k++) {
+					if (isValid(temp.x + rows[k], temp.y + cols[k])
+							&& data[temp.x + rows[k]][temp.y + cols[k]] == 1) {
+						if (!flag) {
+							ans++;// increment only once per spread cycle.
+							flag = true;
+						}
+						data[temp.x + rows[k]][temp.y + cols[k]] = 2;
+						queue.enQueue(new Point(temp.x + rows[k], temp.y
+								+ cols[k]));
 					}
-					data[temp.x + 1][temp.y] = 2;
-					queue.enQueue(new Point(temp.x + 1, temp.y));
-				}
-				// left
-				if (isValid(temp.x - 1, temp.y)
-						&& data[temp.x - 1][temp.y] == 1) {
-					if (!flag) {
-						ans++;
-						flag = true;
-					}
-					data[temp.x - 1][temp.y] = 2;
-					queue.enQueue(new Point(temp.x - 1, temp.y));
-				}
-				// up
-				if (isValid(temp.x, temp.y - 1)
-						&& data[temp.x][temp.y - 1] == 1) {
-					if (!flag) {
-						ans++;
-						flag = true;
-					}
-					data[temp.x][temp.y - 1] = 2;
-					queue.enQueue(new Point(temp.x, temp.y - 1));
-				}
-				// down
-				if (isValid(temp.x, temp.y + 1)
-						&& data[temp.x][temp.y + 1] == 1) {
-					if (!flag) {
-						ans++;
-						flag = true;
-					}
-					data[temp.x][temp.y + 1] = 2;
-					queue.enQueue(new Point(temp.x, temp.y + 1));
 				}
 				queue.deQueue();
 			}
-			//remove the delimiter
+			// remove the delimiter
 			queue.deQueue();
 			// If oranges were rotten in current frame then separate the
-	        // rotten oranges using delimiter for the next frame for processing.
-	        if (!queue.isEmpty()) {
-	            queue.enQueue(new Point(-1,-1));
-	        }
-	        // If Queue was empty than no rotten oranges left to process so exit
+			// rotten oranges using delimiter for the next frame for processing.
+			if (!queue.isEmpty()) {
+				queue.enQueue(new Point(-1, -1));
+			}
+			// If Queue was empty than no rotten oranges left to process so exit
 		}
-		return (verifyAll())? -1: ans;
+		return (verifyAll()) ? -1 : ans;
 	}
 
 	private boolean isValid(int x, int y) {
 		return (x >= 0 && y >= 0 && x < Row && y < Col);
-	}
-
-	private boolean isdelim(Point point) {
-		return (point.x == -1 && point.y == -1);
 	}
 
 	private boolean verifyAll() {
@@ -149,12 +121,14 @@ public class RotAllOrangesInMatrix_BFS {
 
 	/**
 	 * @param args
-	 * @throws UnderFlowException 
-	 * @throws OverFlowException 
+	 * @throws UnderFlowException
+	 * @throws OverFlowException
 	 */
-	public static void main(String[] args) throws OverFlowException, UnderFlowException {
+	public static void main(String[] args) throws OverFlowException,
+			UnderFlowException {
 		int[][] arr = { { 2, 1, 0, 2, 1 }, { 1, 0, 1, 2, 1 }, { 1, 0, 0, 2, 1 } };
-		RotAllOrangesInMatrix_BFS problem=new  RotAllOrangesInMatrix_BFS(3, 5, arr);
+		RotAllOrangesInMatrix_BFS problem = new RotAllOrangesInMatrix_BFS(3, 5,
+				arr);
 		System.out.println(problem.solveProblem());
 	}
 
@@ -172,6 +146,10 @@ public class RotAllOrangesInMatrix_BFS {
 			super();
 			this.x = x;
 			this.y = y;
+		}
+
+		public boolean isDelimiter() {
+			return x == -1 && y == -1;
 		}
 
 	}

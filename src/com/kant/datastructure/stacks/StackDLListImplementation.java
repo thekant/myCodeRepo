@@ -21,6 +21,13 @@ public class StackDLListImplementation<T> implements Stack<T> {
 	/**
 	 * 
 	 */
+	public StackDLListImplementation() {
+		this(false);
+	}
+
+	/**
+	 * 
+	 */
 	public StackDLListImplementation(boolean logEnabled) {
 		this(logEnabled, false);
 	}

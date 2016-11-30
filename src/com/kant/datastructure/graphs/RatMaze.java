@@ -3,8 +3,6 @@
  */
 package com.kant.datastructure.graphs;
 
-import java.util.Arrays;
-
 /**
  * Solve maze to find the path. (0,0) to (M,N)<br/>
  * If destination is reached print the solution matrix Else <br/>
