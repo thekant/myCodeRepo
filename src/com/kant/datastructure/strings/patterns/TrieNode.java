@@ -11,7 +11,7 @@ import java.util.Map;
  *
  */
 public class TrieNode {
-	private Map<Character, TrieNode> children;
+	protected Map<Character, TrieNode> children;
 	private boolean leaf;
 
 	/**
