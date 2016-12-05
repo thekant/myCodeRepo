@@ -74,12 +74,12 @@ public class WordBreakProblem {
 
 	/**
 	 * Returns true if string can be segmented into space separated words,
-	 * otherwise returns false
+	 * otherwise returns false.
 	 * 
 	 * @param str
 	 * @return
 	 */
-	boolean wordBreakDpSolution(String str) {
+	public boolean wordBreakDpSolution(String str) {
 		int size = str.length();
 		if (size == 0)
 			return true;
@@ -88,36 +88,58 @@ public class WordBreakProblem {
 		Arrays.fill(wb, false);
 
 		for (int i = 1; i <= size; i++) {
-			// System.out.println(str.substring(0, i));
 			if (wb[i] == false && this.containsWord(str.substring(0, i))) {
 				wb[i] = true;
 			}
 			if (wb[i] == true) {
-				System.out.println("INSIDE:" + str.substring(0, i));
+				// if wb[full length of text] == true then return true.
 				if (i == size)
 					return true;
+				// for picked up prefix , check if remaining part of text forms
+				// the sentence
 				for (int j = i + 1; j <= size; j++) {
-					System.out.println("{}" + str.substring(i, j));
 					if (wb[j] == false
 							&& this.containsWord(str.substring(i, j))) {
-						System.out.println("{IN}" + str.substring(i, j));
 						wb[j] = true;
 					}
-					if (wb[j] == true) {
-						if (j == size)
-							return true;
+					// if wb[full length of text] == true then return true.
+					if (j == size && wb[j] == true) {
+						return true;
 					}
 				}
 			}
 		}
 
-		/*
-		 * Un-comment these lines to print DP table "wb[]" for (int i = 1; i <=
-		 * size; i++) cout << " " << wb[i];
-		 */
-
 		// If we have tried all prefixes and none of them worked
 		return false;
+	}
+
+	/**
+	 * To print only
+	 * 
+	 * @param word
+	 */
+	public void wordBreakRecursivePrint(String word) {
+		wordBreakPrintUtil(word, "");
+	}
+
+	/**
+	 * 
+	 * @param word
+	 * @param result
+	 * @return
+	 */
+	private void wordBreakPrintUtil(String word, String result) {
+		if (word.length() == 0) {
+			System.out.println(result);
+			return;
+		}
+		for (int i = 1; i <= word.length(); i++) {
+			String prefix = word.substring(0, i);
+			if (containsWord(prefix)) {
+				wordBreakPrintUtil(word.substring(i), result + prefix + " ");
+			}
+		}
 	}
 
 	/**
@@ -128,7 +150,7 @@ public class WordBreakProblem {
 				"mango", "icecream", "and", "go", "i", "hate", "ice", "cream" };
 
 		WordBreakProblem prob = new WordBreakProblem(dictionary);
-		System.out.println(prob.wordBreakDpSolution("ihatesamsung"));
+		prob.wordBreakRecursivePrint("ihatesamsung");
 	}
 
 }
