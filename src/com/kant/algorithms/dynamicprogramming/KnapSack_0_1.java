@@ -9,6 +9,14 @@ package com.kant.algorithms.dynamicprogramming;
  */
 public class KnapSack_0_1 {
 
+	/**
+	 * 
+	 * @param vals
+	 * @param wts
+	 * @param n
+	 * @param capacity
+	 * @return
+	 */
 	public int findMaxValusHoldable(int[] vals, int[] wts, int n, int capacity) {
 		// N and wtCap are two params that change
 		return solveR(vals, wts, n, capacity);
