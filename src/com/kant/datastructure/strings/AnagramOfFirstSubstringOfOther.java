@@ -48,6 +48,7 @@ public class AnagramOfFirstSubstringOfOther {
 		for (i = 0; i < M; i++)
 			countWin[text.charAt(i) - (char) 0]++;
 
+		// sliding window concept from Rabin Karp Algorithm
 		for (i = M; i < N; i++) {
 			if (compareTwoArraysEquality(countP, countWin, 256)) {
 				System.out.println(text.substring(i - M, i));

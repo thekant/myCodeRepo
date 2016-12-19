@@ -3,6 +3,8 @@
  */
 package com.kant.general;
 
+import java.util.Arrays;
+
 /**
  * http://www.geeksforgeeks.org/find-next-greater-number-set-digits/
  * 
@@ -37,12 +39,63 @@ package com.kant.general;
  */
 public class NextGreaterNumberWithSameDigits {
 
+	char[] theNumber;
+
+	public NextGreaterNumberWithSameDigits(String number) {
+		theNumber = number.toCharArray();
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		NextGreaterNumberWithSameDigits prob = new NextGreaterNumberWithSameDigits(
+				"534976");
+		System.out.println(prob.getNextGreaterNumber());
+	}
 
+	public String getNextGreaterNumber() {
+		int d = -1;
+		// I) Start from the right most digit and find the first digit that is
+		// smaller than the digit next to it.
+		for (int i = theNumber.length - 1; i > 0; i--) {
+			if (theNumber[i - 1] < theNumber[i]) {
+				d = i - 1;
+				break;
+			}
+		}
+		// If no such digit is found, then all digits are in descending order
+		// means there cannot be a greater number with same set of digits
+		if (d == -1) {
+			System.out.println("next greater number not possible");
+			return null;
+		}
+
+		// II) Find the smallest digit on right side of (d)'th digit that is
+		// greater than number[d]
+		int x = d + 1;
+		for (int j = d + 1; j < theNumber.length; j++) {
+			if (theNumber[j] > theNumber[d] && theNumber[j] < theNumber[x]) {
+				x = j;
+			}
+		}
+
+		// III) Swap the above found smallest digit with number[d]
+		swap(d, x);
+		// IV) Sort the digits after (d) in ascending order
+		Arrays.sort(theNumber, d + 1, theNumber.length);
+		return new String(theNumber);
+	}
+
+	/**
+	 * 
+	 * @param i
+	 * @param j
+	 */
+	private void swap(int i, int j) {
+		char temp = theNumber[i];
+		theNumber[i] = theNumber[j];
+		theNumber[j] = temp;
 	}
 
 }
