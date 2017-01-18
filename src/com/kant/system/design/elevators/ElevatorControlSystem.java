@@ -39,9 +39,7 @@ public class ElevatorControlSystem {
 
 		requestListenerThread.start();
 		requestProcessorThread.start();
-
 	}
-
 }
 
 /**
@@ -51,15 +49,19 @@ public class ElevatorControlSystem {
  */
 class Elevator {
 	private static Elevator elevator = null;
+	// will be accessed from multiple threads ,synchronize it
 	private TreeSet<Integer> requestSet = new TreeSet<Integer>();
 	private int currentFloor = 0;
-	private Direction direction = Direction.UP;
+	private Direction direction = Direction.ELEVATOR_UP;
 
 	private Elevator() {
 	}
 
 	private Thread requestProcessorThread = null;
 
+	/**
+	 * make singleton
+	 */
 	public static Elevator getInstance() {
 		if (elevator == null) {
 			synchronized (Elevator.class) {
@@ -75,6 +77,11 @@ class Elevator {
 		return direction;
 	}
 
+	/**
+	 * cannot directly set direction of elevator from outside of this class
+	 * 
+	 * @param direction
+	 */
 	private void setDirection(Direction direction) {
 		this.direction = direction;
 	}
@@ -106,12 +113,11 @@ class Elevator {
 	 * @param currentfloor
 	 * @throws InterruptedException
 	 */
-	public synchronized void setCurrentFloor(int currentfloor)
-			throws InterruptedException {
+	public void setCurrentFloor(int currentfloor) throws InterruptedException {
 		if (this.currentFloor > currentfloor) {
-			setDirection(Direction.DOWN);
+			setDirection(Direction.ELEVATOR_DOWN);
 		} else {
-			setDirection(Direction.UP);
+			setDirection(Direction.ELEVATOR_UP);
 		}
 		this.currentFloor = currentfloor;
 
@@ -120,14 +126,13 @@ class Elevator {
 	}
 
 	/**
-	 * 
 	 * @return next request to process based on elevator current floor and
 	 *         direction
 	 */
 	public synchronized int nextFloor() {
 		Integer floor = null;
 
-		if (direction == Direction.UP) {
+		if (direction == Direction.ELEVATOR_UP) {
 			if (requestSet.ceiling(currentFloor) != null) {
 				// set to next greater floor closest to current floor
 				floor = requestSet.ceiling(currentFloor);
@@ -151,6 +156,8 @@ class Elevator {
 				System.out.println("Waiting at Floor :" + getCurrentFloor());
 				wait();// only a new request can notify RequestProcessorThread.
 			} catch (InterruptedException e) {
+				// in case some issue with elevator system .. print stack trace
+				// and return -1.
 				e.printStackTrace();
 			}
 		} else {
@@ -178,10 +185,23 @@ class Elevator {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public ElevatorStatus status() {
+		return (requestSet.size() > 0) ? ElevatorStatus.ELEVATOR_OCCUPIED
+				: ElevatorStatus.ELEVATOR_EMPTY;
+	}
+
 }
 
 enum Direction {
-	UP, DOWN
+	ELEVATOR_UP, ELEVATOR_DOWN
+}
+
+enum ElevatorStatus {
+	ELEVATOR_OCCUPIED, ELEVATOR_EMPTY;
 }
 
 /**
@@ -191,19 +211,21 @@ enum Direction {
  */
 class RequestProcessor implements Runnable {
 
+	/**
+	 * running job
+	 */
 	@Override
 	public void run() {
 		Elevator elevator = Elevator.getInstance();
 		// serve always
 		while (true) {
-
 			// get next floor to go to .. will make this thread wait if no
 			// requests are there no process
 			int floor = elevator.nextFloor();
 			// get current floor
 			int currentFloor = elevator.getCurrentFloor();
 			try {
-				//
+				// only process if next floor value > 0
 				if (floor >= 0) {
 					if (currentFloor > floor) {
 						// reach down to that floor
@@ -221,9 +243,9 @@ class RequestProcessor implements Runnable {
 				}
 			} catch (InterruptedException e) {
 				// If a new request has interrupted a current request processing
-				// then check -
-				// -if the current request is already processed
-				// -otherwise add it back in request Set
+				// then check
+				// >if the current request is already processed fine.
+				// >otherwise add it back in request Set again
 				if (elevator.getCurrentFloor() != floor) {
 					elevator.getRequestSet().add(floor);
 				}
