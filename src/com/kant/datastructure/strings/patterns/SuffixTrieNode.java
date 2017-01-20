@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * If all characters of pattern have been processed, i.e., there is a path from
- * root for characters of the given pattern, then print print all indexes where
+ * root for characters of the given pattern, then print all indexes where
  * pattern is present. <br/>
  * To store indexes, use a list with every node that stores indexes of suffixes
  * starting at the node.
