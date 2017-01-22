@@ -3,53 +3,11 @@
  */
 package com.kant.algorithms.dynamicprogramming;
 
+import java.util.Arrays;
+
 /**
- * </b>Explanation of problem</b> :
- * <p>
- * The edit distance of two strings, s1 and s2, is defined as the minimum number
- * of point mutations required to change s1 into s2, where at a point mutation
- * is one of one of the forms: change a letter, insert a letter or delete a
- * letter
- * </p>
- * The following recurrence relations define the edit distance, d(s1,s2), of two
- * strings s1 and s2:<br/>
  * 
- * 1. d('', '') = 0 -- '' = empty string <br/>
- * 2. d(s, '') = d('', s) = |s| -- i.e. length of s <br/>
- * 3. d(s1+ch1, s2+ch2) = min( d(s1, s2) + if ch1==ch2 then 0 else 1 fi,
- * d(s1+ch1, s2) + 1, d(s1, s2+ch2) + 1 ) <br/>
- * <br/>
- * <p>
- * The first two rules above are obviously true, so it is only necessary
- * consider the last one. Here, neither string is the empty string, so each has
- * a last character, ch1 and ch2 respectively. Somehow, ch1 and ch2 have to be
- * explained in an edit of s1+ch1 into s2+ch2. If ch1 equals ch2, they can be
- * matched for no penalty, i.e. 0, and the overall edit distance is d(s1,s2). If
- * ch1 differs from ch2, then ch1 could be changed into ch2, i.e. 1, giving an
- * overall cost d(s1,s2)+1. Another possibility is to delete ch1 and edit s1
- * into s2+ch2, d(s1,s2+ch2)+1. The last possibility is to edit s1+ch1 into s2
- * and then insert ch2, d(s1+ch1,s2)+1. There are no other alternatives. We take
- * the least expensive, i.e. min, of these alternatives.
- * </p>
- * 
- * 
- * A two-dimensional matrix, m[0..|s1|,0..|s2|] is used to hold the edit
- * distance values:
- * 
- * m[i,j] = d(s1[1..i], s2[1..j])
- * 
- * m[0,0] = 0 m[i,0] = i, i=1..|s1| <br/>
- * m[0,j] = j, j=1..|s2| <br/>
- * 
- * m[i,j] = min( m[i-1,j-1] + if s1[i]=s2[j] then 0 else 1 fi, m[i-1, j] + 1,
- * m[i, j-1] + 1 ),<br/>
- * i=1..|s1|, j=1..|s2| <br/>
- * <p>
- * m[,] can be computed row by row. Row m[i,] depends only on row m[i-1,]. The
- * time complexity of this algorithm is O(|s1|*|s2|). If s1 and s2 have a
- * `similar' length, about `n' say, this complexity is O(n2), much better than
- * exponential!
- * </p>
+ * http://www.geeksforgeeks.org/dynamic-programming-set-5-edit-distance/
  * 
  * @author shashi
  * 
@@ -57,7 +15,7 @@ package com.kant.algorithms.dynamicprogramming;
 public class EdiDistanceProblem {
 
 	/**
-	 * Recursive implementation
+	 * recursive implementation.can take upto O(3^m) in worst case
 	 * 
 	 * @param X
 	 * @param Y
@@ -65,22 +23,68 @@ public class EdiDistanceProblem {
 	 * @param n
 	 * @return
 	 */
-	public static int editDistanceRecursion(char[] X, char[] Y, int m, int n) {
-		// Base cases
-		if (m == 0 && n == 0)
-			return 0;
+	public int solveRec(char[] X, char[] Y, int m, int n) {
+		// base case
 		if (m == 0)
 			return n;
 		if (n == 0)
 			return m;
 
-		// Recurse
-		int left = editDistanceRecursion(X, Y, m - 1, n) + 1;
-		int right = editDistanceRecursion(X, Y, m, n - 1) + 1;
-		int both = editDistanceRecursion(X, Y, m - 1, n - 1)
-				+ ((X[m - 1] != Y[n - 1]) ? 1 : 0);
+		// If last characters of two strings are same, nothing
+		// much to do. Ignore last characters and get count for
+		// remaining strings.
+		if ((X[m - 1] == Y[n - 1]))
+			return solveRec(X, Y, m - 1, n - 1);
 
-		return Math.min(Math.min(left, right), both);
+		// If last characters are not same, consider all three
+		// operations on last character of first string, recursively
+		// compute minimum cost for all three operations and take
+		// minimum of three values.
+		return 1 + min(solveRec(X, Y, m, n - 1),// insert (add ch2)
+				solveRec(X, Y, m - 1, n),// remove (del ch1)
+				solveRec(X, Y, m - 1, n - 1));// replace (make ch1=ch2)
+	}
+
+	/**
+	 * dp solution
+	 * 
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public int solveByDp(char[] X, char[] Y) {
+		int m = X.length;
+		int n = Y.length;
+		int[][] result = new int[m + 1][];
+		for (int i = 0; i <= m; i++) {
+			result[i] = new int[n + 1];
+			Arrays.fill(result[i], 0);
+		}
+
+		for (int i = 0; i <= m; i++) {
+			for (int j = 0; j <= n; j++) {
+				if (i == 0)
+					result[i][j] = j;
+				else if (j == 0)
+					result[i][j] = i;
+
+				else if (X[i - 1] == Y[j - 1]) {
+					result[i][j] = result[i - 1][j - 1];
+				} else {
+					result[i][j] = 1 + min(result[i][j - 1], result[i - 1][j],
+							result[i - 1][j - 1]);
+				}
+			}
+		}
+		return result[m][n];
+	}
+
+	private int min(int a, int b, int c) {
+		if (a < b & a < c)
+			return a;
+		if (b < a & b < c)
+			return b;
+		return c;
 	}
 
 	/**
@@ -88,9 +92,13 @@ public class EdiDistanceProblem {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String text1 = "ptest";
-		String text2 = "pest";
-		System.out.println(editDistanceRecursion(text1.toCharArray(),
+		EdiDistanceProblem prob = new EdiDistanceProblem();
+		String text1 = "itssunday or friday you may better know";
+		String text2 = "itssaturday or friday you may better know";
+		System.out.println(prob.solveRec(text1.toCharArray(),
 				text2.toCharArray(), text1.length(), text2.length()));
+
+		System.out.println(prob.solveByDp(text1.toCharArray(),
+				text2.toCharArray()));
 	}
 }

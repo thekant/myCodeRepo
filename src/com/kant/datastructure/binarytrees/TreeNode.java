@@ -9,9 +9,9 @@ package com.kant.datastructure.binarytrees;
  */
 public class TreeNode<T> {
 
-	private T data;
-	private TreeNode<T> left;
-	private TreeNode<T> right;
+	protected T data;
+	protected TreeNode<T> left;
+	protected TreeNode<T> right;
 
 	public TreeNode() {
 		this(null, null, null);
