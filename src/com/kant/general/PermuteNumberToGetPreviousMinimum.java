@@ -45,8 +45,8 @@ public class PermuteNumberToGetPreviousMinimum {
 	 * @param item
 	 * @return
 	 */
-	public String insertToNumberStringAtPosition(String number, int position,
-			int item) {
+	public String insertToNumberStringAtPosition(String number, int item,
+			int position) {
 		return number.substring(0, position) + item
 				+ number.substring(position, number.length());
 	}
@@ -64,14 +64,14 @@ public class PermuteNumberToGetPreviousMinimum {
 			return permutations;
 		}
 		// else
-		int inserterDig = (int) (number.charAt(0) - '0');
+		int digToInsert = (int) (number.charAt(0) - '0');
 		Iterator<String> iterator = permuteNumber(number.substring(1))
 				.iterator();
 		while (iterator.hasNext()) {
 			String subPerm = iterator.next();
-			for (int dig = 0; dig <= subPerm.length(); dig++) {
-				permutations.add(insertToNumberStringAtPosition(subPerm, dig,
-						inserterDig));
+			for (int pos = 0; pos <= subPerm.length(); pos++) {
+				permutations.add(insertToNumberStringAtPosition(subPerm,
+						digToInsert, pos));
 			}
 		}
 		return permutations;

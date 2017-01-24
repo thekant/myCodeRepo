@@ -72,13 +72,14 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		BinarySearchTree<Integer> tree=new  BinarySearchTree<>();
-		int[] data= {8,4,13,2,7,9,15,1,3,6};
-		for(int i=0;i<data.length;i++){
+		BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+		int[] data = { 8, 4, 13, 2, 7, 9, 15, 1, 3, 6 };
+		for (int i = 0; i < data.length; i++) {
 			tree.insert(data[i]);
 		}
-		tree.traverseLevelOrder();
-		//tree.traversePreOrder();
+		tree.traverseLevelOrder2();
+		System.out.println();
+		//tree.traverseLevelOrder();
 		tree.printSpiral();
 	}
 }

@@ -72,13 +72,6 @@ class TreeNodeWithvc extends TreeNode<Integer> {
 	private TreeNode<Integer> node;
 
 	/**
-	 * 
-	 */
-	public TreeNodeWithvc() {
-		super();
-	}
-
-	/**
 	 * @param data
 	 * @param left
 	 * @param right

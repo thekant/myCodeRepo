@@ -15,6 +15,15 @@ public class PossibleWordPhoneDigits {
 	public static long counter = 0;
 
 	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		PossibleWordPhoneDigits generator = new PossibleWordPhoneDigits();
+		generator.printWordsForInput("23");
+		System.out.println(PossibleWordPhoneDigits.counter);
+	}
+
+	/**
 	 * 
 	 */
 	public PossibleWordPhoneDigits() {
@@ -41,7 +50,7 @@ public class PossibleWordPhoneDigits {
 	}
 
 	/**
-	 * DFS way of moving down.
+	 * DFS way of moving down.[backtracking algorithm]
 	 * 
 	 * @param input
 	 * @param output
@@ -63,15 +72,6 @@ public class PossibleWordPhoneDigits {
 			// remove the character
 			output.deleteCharAt(output.length() - 1);
 		}
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		PossibleWordPhoneDigits generator = new PossibleWordPhoneDigits();
-		generator.printWordsForInput("7259733668");
-		System.out.println(PossibleWordPhoneDigits.counter);
 	}
 
 }

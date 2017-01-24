@@ -37,32 +37,33 @@ public class AnagramOfFirstSubstringOfOther {
 	 * @param pat
 	 */
 	private static void modifiedRabinCarpSolution(String text, String pat) {
-		int[] countP = new int[256];
-		int[] countWin = new int[256];
+		int[] patternHash = new int[256];
+		int[] textHash = new int[256];
 
 		int M = pat.length();
 		int N = text.length();
 		int i = 0;
 		for (i = 0; i < M; i++)
-			countP[pat.charAt(i) - (char) 0]++;
+			patternHash[pat.charAt(i) - (char) 0]++;
 		for (i = 0; i < M; i++)
-			countWin[text.charAt(i) - (char) 0]++;
+			textHash[text.charAt(i) - (char) 0]++;
 
 		// sliding window concept from Rabin Karp Algorithm
 		for (i = M; i < N; i++) {
-			if (compareTwoArraysEquality(countP, countWin, 256)) {
+			// verify if last window has a match
+			if (compareTwoArraysEquality(patternHash, textHash, 256)) {
 				System.out.println(text.substring(i - M, i));
 				return;
 			}
-			countWin[text.charAt(i) - (char) 0]++;
-			countWin[text.charAt(i - M) - (char) 0]--;
+			textHash[text.charAt(i) - (char) 0]++;
+			textHash[text.charAt(i - M) - (char) 0]--;
 		}
 
-		if (compareTwoArraysEquality(countP, countWin, 256)) {
+		// verify last wiindow
+		if (compareTwoArraysEquality(patternHash, textHash, 256)) {
 			System.out.println(text.substring(i - M, i));
 		}
 		return;
-
 	}
 
 	/**
@@ -89,6 +90,7 @@ public class AnagramOfFirstSubstringOfOther {
 	 */
 	private static void tryMethod1(String text, String pat) {
 		int patLen = pat.length();
+		// for each substring of size == pattern.length
 		for (int i = 0; i <= text.length() - patLen; i++) {
 			String subText = text.substring(i, patLen + i);
 			if (areAnagrams(subText, pat)) {

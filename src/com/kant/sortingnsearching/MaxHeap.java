@@ -93,7 +93,7 @@ public class MaxHeap {
 				greaterElemPos = rightC;
 		}
 
-		if (isValid(leftC) && data[pos] < data[greaterElemPos]) {
+		if (isValid(greaterElemPos) && data[pos] < data[greaterElemPos]) {
 			swapp(pos, greaterElemPos);
 			heapify(greaterElemPos);
 		}

@@ -6,8 +6,6 @@ package com.kant.datastructure.graphs;
 import com.kant.datastructure.queues.Dequeue;
 import com.kant.datastructure.queues.DequeueListImplementation;
 import com.kant.datastructure.queues.OverFlowException;
-import com.kant.datastructure.queues.Queue;
-import com.kant.datastructure.queues.QueueListImplementation;
 import com.kant.datastructure.queues.UnderFlowException;
 
 /**
@@ -22,7 +20,7 @@ import com.kant.datastructure.queues.UnderFlowException;
  * 1: Cells have fresh oranges
  * 
  * 2: Cells have rotten oranges So we have to determine what is the minimum time
- * required so that all the oranges become rotten. A rotten orange at index
+ * required so that all the oranges have rotten away. A rotten orange at index
  * [i,j] can rot other fresh orange at indexes [i-1,j], [i+1,j], [i,j-1],
  * [i,j+1] (up, down, left and right). If it is impossible to rot every orange
  * then simply return -1.
@@ -73,7 +71,12 @@ public class RotAllOrangesInMatrix_BFS {
 			// This flag is used to determine whether even a single fresh
 			// orange gets rotten due to rotten oranges in current time
 			// frame so we can increase the count of the required time.
-			boolean flag = false;
+
+			/**
+			 * TODO: i have removed this flag .. although it defines a way of
+			 * doing this type of problem
+			 */
+			// boolean flag = false;
 			int[] rows = { -1, 0, 1, 0 };
 			int[] cols = { 0, -1, 0, 1 };
 
@@ -84,10 +87,10 @@ public class RotAllOrangesInMatrix_BFS {
 				for (int k = 0; k < 4; k++) {
 					if (isValid(temp.x + rows[k], temp.y + cols[k])
 							&& data[temp.x + rows[k]][temp.y + cols[k]] == 1) {
-						if (!flag) {
-							ans++;// increment only once per spread cycle.
-							flag = true;
-						}
+						// if (!flag) {
+						// ans++;// increment only once per spread cycle.
+						// flag = true;
+						// }
 						data[temp.x + rows[k]][temp.y + cols[k]] = 2;
 						queue.enQueue(new Point(temp.x + rows[k], temp.y
 								+ cols[k]));
@@ -100,6 +103,7 @@ public class RotAllOrangesInMatrix_BFS {
 			// If oranges were rotten in current frame then separate the
 			// rotten oranges using delimiter for the next frame for processing.
 			if (!queue.isEmpty()) {
+				ans++;
 				queue.enQueue(new Point(-1, -1));
 			}
 			// If Queue was empty than no rotten oranges left to process so exit
