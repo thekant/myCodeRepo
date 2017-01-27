@@ -31,6 +31,67 @@ public class InplaceStringModificationAlgos {
 	}
 
 	/**
+	 * aaaacccbdfgheee => abdfgh<br/>
+	 * acccaadef => aaadef => def
+	 * 
+	 * @param input2
+	 */
+	public static void tripletsRemoval(char[] input) {
+		removeRepeated(input, 3);
+		while (checkIfHasRepeated(input, 3)) {
+			removeRepeated(input, 3);
+		}
+	}
+
+	private static boolean checkIfHasRepeated(char[] input, int numR) {
+		int curIndex = 0, count = 0;
+		while (curIndex < input.length) {
+			char r = input[curIndex];
+			if (r != ' ') {
+				count = 0;
+				while (count < numR && curIndex < input.length
+						&& input[curIndex] == r) {
+					curIndex++;
+					count++;
+				}
+				if (count == numR)
+					return true;
+			}
+			curIndex++;
+		}
+		System.out.println("No repeatition found: " + new String(input));
+		return false;
+	}
+
+	public static void removeRepeated(char[] input, int numR) {
+		int resultIndex = 0;
+		int curIndex = 0;// start from 1
+		int count = 0;
+		while (curIndex < input.length) {
+			char r = input[curIndex];
+			count = 0;
+			while (count < numR && curIndex < input.length
+					&& input[curIndex] == r) {
+				curIndex++;
+				count++;
+			}
+
+			// reset if count!=numR
+			if (count != numR) {
+				curIndex -= count;
+			}
+
+			if (curIndex < input.length) {
+				input[resultIndex++] = input[curIndex++];
+			}
+		}
+
+		for (curIndex = resultIndex; curIndex < input.length; curIndex++)
+			input[curIndex] = ' ';
+		System.out.println(input);
+	}
+
+	/**
 	 * TODO shuffle inplace
 	 */
 	public static void shuffleSubString(char[] input3, int subStart, int subEnd) {
