@@ -63,10 +63,10 @@ public class PossibleWordPhoneDigits {
 			return;
 		}
 
-		int pos = input.charAt(n) - '0';
-		for (int secCount = 0; secCount < characterTable[pos].length(); secCount++) {
+		int digit = input.charAt(n) - '0';
+		for (int secCount = 0; secCount < characterTable[digit].length(); secCount++) {
 			// add the character
-			output = output.append(characterTable[pos].charAt(secCount));
+			output = output.append(characterTable[digit].charAt(secCount));
 			// generate those numbers
 			generateWord(input, output, n + 1);
 			// remove the character

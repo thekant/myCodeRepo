@@ -1,4 +1,4 @@
-package com.kant.general;
+package com.kant.general.advanced;
 
 /**
  * 
@@ -35,7 +35,6 @@ public class MatrixRotate90DegProb {
 			}
 			System.out.println();
 		}
-
 	}
 
 	/**
