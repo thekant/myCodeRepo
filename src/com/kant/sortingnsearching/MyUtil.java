@@ -47,6 +47,28 @@ public class MyUtil {
 	}
 
 	/**
+	 * 
+	 * @param data
+	 *            2d matrix
+	 * @param m
+	 *            row
+	 * @param n
+	 *            column
+	 */
+	public static void print2DMatrix(int[][] data, int m, int n) {
+		System.out.println("-----------");
+		for (int i = 0; i < m; i++) {
+
+			for (int j = 0; j < n; j++) {
+				System.out.printf("%2d ", data[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println("------------");
+
+	}
+
+	/**
 	 * Uses {@link Arrays} copyOfRange() Copies target from index 'l' to 'h-1'
 	 * 
 	 * @param from

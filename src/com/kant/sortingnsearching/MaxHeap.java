@@ -57,7 +57,7 @@ public class MaxHeap {
 	 * @param aSize
 	 */
 	private void buildHeap(int aSize) {
-		for (int i = getParent(size); i >= FRONT; i--) {
+		for (int i = getParent(aSize); i >= FRONT; i--) {
 			heapify(i);
 		}
 	}
