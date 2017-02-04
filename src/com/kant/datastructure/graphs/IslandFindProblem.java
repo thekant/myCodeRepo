@@ -71,7 +71,7 @@ public class IslandFindProblem {
 	private static final int colNbr[] = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 	/**
-	 * DFS
+	 * Basically DFS
 	 * 
 	 * @param i
 	 * @param j

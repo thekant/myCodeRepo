@@ -23,9 +23,9 @@ public class PermutationAndCombinationsOfString {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// permutation("aabc".toCharArray());
+		permutation("aabc".toCharArray());
 		// combinations("aabc".toCharArray());
-		printAllpermutationsAndCombinations("aabc".toCharArray());
+		// printAllpermutationsAndCombinations("aabc".toCharArray());
 	}
 
 	/**
@@ -171,6 +171,8 @@ public class PermutationAndCombinationsOfString {
 	}
 
 	/**
+	 * TreeMap will sort according to natural ordering of keys.
+	 * 
 	 * @param in
 	 * @return
 	 */

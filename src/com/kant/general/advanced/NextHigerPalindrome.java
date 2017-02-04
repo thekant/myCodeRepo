@@ -16,9 +16,9 @@ public class NextHigerPalindrome {
 	public static void main(String[] args) {
 		// int num[] = {  };
 		int num[] = toDigitArray("2133");//"94187978322","99999","808"
-		NextHigerPalindrome giver = new NextHigerPalindrome();
+		NextHigerPalindrome solver = new NextHigerPalindrome();
 
-		int[] result = giver.nextHigherPalindrome(num);
+		int[] result = solver.nextHigherPalindrome(num);
 		printData(result);
 	}
 
