@@ -7,6 +7,8 @@ import com.kant.sortingnsearching.MyUtil;
 
 /**
  * http://www.geeksforgeeks.org/the-stock-span-problem/ <br/>
+ * 
+ * 
  * The stock span problem is a financial problem where we have a series of n
  * daily price quotes for a stock and we need to calculate span of stock’s price
  * for all n days. The span Si of the stock’s price on a given day i is defined
@@ -56,6 +58,7 @@ public class StockSpanProblem {
 	public int[] getStackSpanOptimal() {
 		int[] result = new int[stockData.length];
 		result[0] = 1;
+		// store indexes
 		Stack<Integer> stack = new StackListImplementation<>(false);
 		stack.push(0);
 

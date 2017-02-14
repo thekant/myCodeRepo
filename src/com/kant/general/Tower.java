@@ -1,6 +1,6 @@
 package com.kant.general;
 
-import com.kant.datastructure.stacks.StackDLListImplementation;
+import java.util.Stack;
 
 /**
  * Tower Of Hanoi problem.
@@ -9,11 +9,11 @@ import com.kant.datastructure.stacks.StackDLListImplementation;
  * 
  */
 public class Tower {
-	StackDLListImplementation<Integer> disks;
+	private Stack<Integer> disks;
 	private int index; // index of this tower
 
 	public Tower(int index) {
-		disks = new StackDLListImplementation<Integer>();
+		disks = new Stack<Integer>();
 		this.setIndex(index);
 	}
 

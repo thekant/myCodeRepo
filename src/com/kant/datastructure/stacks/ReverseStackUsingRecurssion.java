@@ -6,6 +6,10 @@ package com.kant.datastructure.stacks;
 /**
  * TESTED
  * 
+ * http://www.geeksforgeeks.org/reverse-a-stack-using-recursion/
+ * 
+ * A queue can reverse a stack. A queue can be implemented with 2 stacks.
+ * 
  * @author shaskant
  *
  */
@@ -16,7 +20,7 @@ public class ReverseStackUsingRecurssion {
 	 * 
 	 * @param stack
 	 */
-	public void reverseStack(Stack<String> stack) {
+	public void reverseStack(java.util.Stack<String> stack) {
 		if (!stack.isEmpty()) {
 			String temp = stack.pop();
 			reverseStack(stack);
@@ -24,7 +28,7 @@ public class ReverseStackUsingRecurssion {
 		}
 	}
 
-	private void insertAtBottom(Stack<String> stack, String data) {
+	private void insertAtBottom(java.util.Stack<String> stack, String data) {
 		if (stack.isEmpty()) {
 			stack.push(data);
 		} else {
@@ -34,22 +38,38 @@ public class ReverseStackUsingRecurssion {
 		}
 	}
 
+	
+	public void revert(java.util.Stack<String> stack){
+		revert(stack, stack.pop());
+	}
+	
+	private void revert(java.util.Stack<String> stack, String data) {
+		if (stack.isEmpty()) {
+			stack.push(data);
+		} else {
+			String temp = stack.pop();
+			revert(stack, temp);
+			stack.push(data);
+		}
+	}
+
 	/**
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		StackListImplementation<String> stack = new StackListImplementation<>(
-				false);
+		java.util.Stack<String> stack = new java.util.Stack<>();
+		stack.push("?");
 		stack.push("shashi");
-		stack.push("is");
 		stack.push("this");
+		stack.push("is");
+		stack.push("ok");
 		ReverseStackUsingRecurssion stackReverser = new ReverseStackUsingRecurssion();
-		stackReverser.reverseStack(stack);
+		stackReverser.revert(stack);
 		System.out.println(stack.pop());
 		System.out.println(stack.pop());
 		System.out.println(stack.pop());
-
+		System.out.println(stack.pop());
+		System.out.println(stack.pop());
 	}
-
 }

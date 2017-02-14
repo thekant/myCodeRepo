@@ -6,17 +6,18 @@ package com.kant.datastructure.stacks;
 /**
  * Time Complexity: O(n). The worst case occurs when all elements are sorted in
  * decreasing order. If elements are sorted in decreasing order, then every
- * element is processed at most 4 times. a) Initially pushed to the stack. b)
- * Popped from the stack when next element is being processed. c) Pushed back to
- * the stack because next element is smaller. d) Popped from the stack in step 3
- * of algo.
+ * element is processed at most 4 times.
+ *  a) Initially pushed to the stack. <br/>
+ *  b) Popped from the stack when next element is being processed.<br/> 
+ *  c) Pushed back to the stack because next element is smaller. <br/>
+ *  d) Popped from the stack in step 3 of algo.
  * 
  * @author shaskant
  *
  */
 public class NextGreaterElementOntheRightUsingStack {
 
-	StackListImplementation<Integer> stack;
+	Stack<Integer> stack;
 
 	public NextGreaterElementOntheRightUsingStack() {
 		stack = new StackListImplementation<Integer>(false);
@@ -48,6 +49,10 @@ public class NextGreaterElementOntheRightUsingStack {
 		}
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		NextGreaterElementOntheRightUsingStack nxgtElem = new NextGreaterElementOntheRightUsingStack();
 		nxgtElem.printNextGreaterElement(new int[] { 11, 13, 21, 3 });

@@ -117,7 +117,7 @@ public abstract class BinaryTree<T> {
 	}
 
 	/**
-	 * iterative approach
+	 * iterative approach.[Single Queue approach]
 	 */
 	public void traverseLevelOrder2() {
 		System.out.println("using BFS to print level order:");
@@ -129,7 +129,7 @@ public abstract class BinaryTree<T> {
 		int level = 0;
 		while (!queue.isEmpty()) {
 
-			System.out.print("\nat " + level + ": ");
+			System.out.print("\nAt " + level + ": ");
 			while (!isMarker(queue.peek())) {
 				TreeNode<T> curNode = queue.poll();
 				System.out.print(curNode.getData() + " ");
