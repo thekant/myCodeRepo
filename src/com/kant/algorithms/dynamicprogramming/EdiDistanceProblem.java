@@ -30,16 +30,18 @@ public class EdiDistanceProblem {
 		if (n == 0)
 			return m;
 
-		// If last characters of two strings are same, nothing
-		// much to do. Ignore last characters and get count for
-		// remaining strings.
+		/**
+		 * If last characters of two strings are same, nothing much to do.
+		 * Ignore last characters and get count for remaining strings.
+		 */
 		if ((X[m - 1] == Y[n - 1]))
 			return solveRec(X, Y, m - 1, n - 1);
 
-		// If last characters are not same, consider all three
-		// operations on last character of first string, recursively
-		// compute minimum cost for all three operations and take
-		// minimum of three values.
+		/**
+		 * If last characters are not same, consider all three operations on
+		 * last character of first string, recursively compute minimum cost for
+		 * all three operations and take minimum of three values.
+		 */
 		return 1 + min(solveRec(X, Y, m, n - 1),// insert (add ch2)
 				solveRec(X, Y, m - 1, n),// remove (del ch1)
 				solveRec(X, Y, m - 1, n - 1));// replace (make ch1=ch2)
@@ -79,6 +81,9 @@ public class EdiDistanceProblem {
 		return result[m][n];
 	}
 
+	/**
+	 * returns minimum of 3
+	 */
 	private int min(int a, int b, int c) {
 		if (a < b & a < c)
 			return a;

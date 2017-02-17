@@ -43,6 +43,12 @@ public class WordBreakProblem {
 	 * Recursive and simple solution .<br/>
 	 * Add memory for a substring that's already calculated [DP solution]
 	 * 
+	 * function(item,int POS)
+	 * Only variable is POS.
+	 * 
+	 * store[POS] = function(item,POS);
+	 * 
+	 * 
 	 * @param item
 	 * @return
 	 */
@@ -50,14 +56,13 @@ public class WordBreakProblem {
 		if (item.length() == 0)
 			return true;
 		for (int i = 1; i <= item.length(); i++) {
-			// if substring is in dictionary
+			// if current substring is in dictionary
 			if (this.containsWord(item.substring(0, i))) {
 				System.out.print(item.substring(0, i) + " ");
 				if (wordBreakSolve(item.substring(i))) {
 					return true;
 				}
 			}
-			// retry with next substring
 		}
 		return false;
 	}

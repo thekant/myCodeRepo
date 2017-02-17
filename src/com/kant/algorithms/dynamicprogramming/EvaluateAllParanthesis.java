@@ -53,15 +53,17 @@ public class EvaluateAllParanthesis {
 	private List<Integer> possibleResultUtil(String input,
 			Map<String, List<Integer>> store) {
 		List<Integer> result = new ArrayList<Integer>();
+		// already evaluated.
 		if (store.containsKey(input)) {
 			return store.get(input);
 		}
+
+		// Base cases
 		if (input.length() == 1) {
 			result.add(input.charAt(0) - '0');
 			store.put(input, result);
 			return result;
-		}
-		if (input.length() == 3) {
+		} else if (input.length() == 3) {
 			int num = eval(input.charAt(0) - '0', input.charAt(1),
 					input.charAt(2) - '0');
 
@@ -72,18 +74,19 @@ public class EvaluateAllParanthesis {
 
 		for (int i = 0; i < input.length(); i++) {
 			if (isOperator(input.charAt(i))) {
-				// If character is operator then split and
-				// calculate recursively
-				List<Integer> resPre = possibleResultUtil(
+				/**
+				 * If character is operator then split and calculate recursively
+				 */
+				List<Integer> resLeft = possibleResultUtil(
 						input.substring(0, i), store);
-				List<Integer> resSuf = possibleResultUtil(
+				List<Integer> resRight = possibleResultUtil(
 						input.substring(i + 1), store);
 
 				// Combine all possible combination
-				for (int j = 0; j < resPre.size(); j++) {
-					for (int k = 0; k < resSuf.size(); k++) {
-						result.add(eval(resPre.get(j), input.charAt(i),
-								resSuf.get(k)));
+				for (int j = 0; j < resLeft.size(); j++) {
+					for (int k = 0; k < resRight.size(); k++) {
+						result.add(eval(resLeft.get(j), input.charAt(i),
+								resRight.get(k)));
 					}
 				}
 				store.put(input, result);

@@ -51,7 +51,7 @@ public class RearrancePosNegAlternatively {
 		}
 
 		/**
-		 * STAGE:1 <end> input is now divided into -1ves ...0...+ves
+		 * STAGE:1 <end> input is now divided into -ves ...0...+ves
 		 * STAGE:2<begin> By now all positive numbers are at end and negative
 		 * numbers at the beginning of array. Initialize indexes for starting
 		 * point of positive and negative numbers to be swapped

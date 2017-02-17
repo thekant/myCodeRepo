@@ -58,13 +58,12 @@ public class BoggleGame {
 	private void findWordsUtil(int i, int j, boolean[][] visited,
 			StringBuffer output) {
 		visited[i][j] = true;
+		
 		output.append(boggle[i][j]);
-
 		if (isDictionaryWord(output.toString())) {
 			System.out.println(output);
 		}
-
-		// all 8 directions
+		// all 8 directions without repeating a cell
 		for (int row = i - 1; row <= i + 1 && row < M; row++)
 			for (int col = j - 1; col <= j + 1 && col < N; col++)
 				if (row >= 0 && col >= 0 && !visited[row][col])

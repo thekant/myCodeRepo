@@ -21,6 +21,7 @@ public class MaximumValuePathInMatrix {
 	 * Use dijakstra's with modification for max value at each step. source
 	 * (0,0) and destination (M,N)
 	 * 
+	 * Function starts from (M,N) and move towards (0,0)
 	 * 
 	 * @return
 	 */
@@ -38,11 +39,11 @@ public class MaximumValuePathInMatrix {
 	private int findMaxPathUtil(int i, int j) {
 		if (i < 0 || j < 0)
 			return 0;
-		if (i == 0 && isSafe(i, j))
+		if (i == 0 && j == 0)
 			return dataMatrix[i][j];
 
-		return Math.max(findMaxPathUtil(i - 1, j), findMaxPathUtil(i, j - 1))
-				+ dataMatrix[i][j];
+		return dataMatrix[i][j]
+				+ Math.max(findMaxPathUtil(i - 1, j), findMaxPathUtil(i, j - 1));
 	}
 
 	private boolean isSafe(int x, int y) {

@@ -1,5 +1,5 @@
 /**
- * 
+ * http://www.geeksforgeeks.org/print-all-combinations-of-balanced-parentheses/
  */
 package com.kant.general;
 
@@ -13,31 +13,28 @@ public class ParenthesisMatchingPermutationsProblem {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		printPar(3);
+		printPar(4);
 	}
 
 	/**
 	 * 
-	 * @param left
-	 * @param right
-	 * @param str
-	 * @param count
 	 */
-	public static void printParanthesis(int left, int right, char[] str,
-			int count) {
-		if (left < 0 || right < left)
-			return; // invalid state
-		if (left == 0 && right == 0) {
-			System.out.println(str); // found one, so print it
+	public static void printParanthesis(int open, int close, char[] str, int pos) {
+		if (close == 0) {
+			System.out.println(str);
 		} else {
-			if (left > 0) { // try a left paren, if there are some available
-				str[count] = '(';
-				printParanthesis(left - 1, right, str, count + 1);
+			if (open > 0) {
+				str[pos] = '(';
+				printParanthesis(open - 1, close, str, pos + 1);
 			}
 
-			if (right > left) { // try a right paren, if there's a matching left
-				str[count] = ')';
-				printParanthesis(left, right - 1, str, count + 1);
+			/**
+			 * number of open braces should be > number of close braces. Here
+			 * values are decreasing so reverse.
+			 */
+			if (close > open) {
+				str[pos] = ')';
+				printParanthesis(open, close - 1, str, pos + 1);
 			}
 		}
 	}
