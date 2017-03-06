@@ -20,7 +20,7 @@ public class ReplaceZeroToGetMax1s {
 	/**
 	 * Returns number of 1's that replacement will make.
 	 * 
-	 * References back to Kadane's algo.
+	 * References back to Kadane's algo. [MY Algo]
 	 * 
 	 * @param data
 	 * @return

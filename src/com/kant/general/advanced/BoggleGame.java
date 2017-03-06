@@ -68,7 +68,7 @@ public class BoggleGame {
 			for (int col = j - 1; col <= j + 1 && col < N; col++)
 				if (row >= 0 && col >= 0 && !visited[row][col])
 					findWordsUtil(row, col, visited, output);
-
+        //backtrack
 		visited[i][j] = false;
 		output.deleteCharAt(output.length() - 1);
 	}

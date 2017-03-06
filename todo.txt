@@ -1,0 +1,4 @@
+http://www.geeksforgeeks.org/find-next-smaller-next-greater-array/ [done]
+http://www.geeksforgeeks.org/category/stack/ 
+http://www.geeksforgeeks.org/convert-binary-tree-threaded-binary-tree/ [done][todo create code]
+

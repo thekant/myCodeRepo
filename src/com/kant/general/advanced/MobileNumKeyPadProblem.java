@@ -10,7 +10,7 @@ package com.kant.general.advanced;
  * left, right or down to the current button. You are not allowed to press
  * bottom row corner buttons (i.e. * and # ).
  *
- * Generate number of possible combinations for a given length
+ * Generate number of possible combinations for a given length.
  * 
  * @author shashi
  * 
@@ -21,8 +21,12 @@ public class MobileNumKeyPadProblem {
 	private final int rowNbr[] = { 0, 0, -1, 0, 1 };
 	private final int colNbr[] = { 0, -1, 0, 1, 0 };
 
-	private char keypad[][] = { { '1', '2', '3' }, { '4', '5', '6' },
-			{ '7', '8', '9' }, { '*', '0', '#' } };
+	private char keypad[][] = { 
+			{ '1', '2', '3' }, 
+			{ '4', '5', '6' },
+			{ '7', '8', '9' }, 
+			{ '*', '0', '#' } 
+			};
 
 	/**
 	 * @param args
@@ -36,8 +40,6 @@ public class MobileNumKeyPadProblem {
 	 * Bottom up approach.<br/>
 	 * start counting from 0 to n and store values for (row,column) pair which
 	 * is basically a number on keypad.
-	 * 
-	 * 
 	 * 
 	 * @param n
 	 * @return
@@ -53,8 +55,8 @@ public class MobileNumKeyPadProblem {
 		}
 
 		for (int k = 2; k <= n; k++)
-			for (int i = 0; i <= 3; i++)
-				for (int j = 0; j <= 2; j++) {
+			for (int i = 0; i <= keypad.length; i++)
+				for (int j = 0; j <= keypad[0].length; j++) {
 					if (keypad[i][j] != '#' && keypad[i][j] != '*') {
 						int num = keypad[i][j] - '0';
 						allStepCounts[num][k] = 0;
@@ -112,7 +114,7 @@ public class MobileNumKeyPadProblem {
 	private int getCountUtil(int row, int col, int n) {
 		if (n == 0 || n == 1)
 			return n;
-
+    
 		int ro, co, totalCount = 0;
 		for (int move = 0; move < 5; move++) {
 			ro = row + rowNbr[move];
@@ -125,5 +127,4 @@ public class MobileNumKeyPadProblem {
 		}
 		return totalCount;
 	}
-
 }

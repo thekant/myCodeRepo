@@ -4,7 +4,7 @@
 package com.kant.datastructure.graphs;
 
 /**
- * Solve maze to find the path. (0,0) to (M,N)<br/>
+ * Solve maze to find the path. From (0,0) to (M,N)<br/>
  * If destination is reached print the solution matrix Else <br/>
  * a) Mark current cell in solution matrix as 1. <br/>
  * b) Move forward in horizontal direction and recursively check if this move
@@ -74,7 +74,7 @@ public class RatMaze {
 				return true;
 			if (solveMazeUtil(i, j + 1, sol))
 				return true;
-			//backtrack step
+			// backtrack step
 			sol[i][j] = 0;
 		}
 		return false;

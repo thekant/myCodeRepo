@@ -243,4 +243,58 @@ public abstract class BinaryTree<T> {
 		}
 	}
 
+	/**
+	 * TODO
+	 * http://www.geeksforgeeks.org/construct-a-binary-tree-from-postorder-and
+	 * -inorder/
+	 * 
+	 * TO be used for build tree from INorder and Preorder traversal values.
+	 */
+	static int preIndex = 0;
+
+	/**
+	 * Recursive function to construct binary of size len from Inorder traversal
+	 * in[] and Preorder traversal pre[]. Initial values of inStrt and inEnd
+	 * should be 0 and len - 1. The function doesn't do any error checking for
+	 * cases where inorder and preorder do not form a tree.
+	 */
+	public TreeNode<T> buildTree(T in[], T pre[], int inStrt, int inEnd) {
+		if (inStrt > inEnd)
+			return null;
+
+		/*
+		 * Pick current node from Preorder traversal using preIndex and
+		 * increment preIndex
+		 */
+		TreeNode<T> tNode = new TreeNode<>(pre[preIndex++]);
+
+		/* If this node has no children then return */
+		if (inStrt == inEnd)
+			return tNode;
+
+		/* Else find the index of this node in Inorder traversal */
+		int inIndex = search(in, inStrt, inEnd, tNode.data);
+
+		/*
+		 * Using index in Inorder traversal, construct left and right subtress
+		 */
+		tNode.left = buildTree(in, pre, inStrt, inIndex - 1);
+		tNode.right = buildTree(in, pre, inIndex + 1, inEnd);
+
+		return tNode;
+	}
+
+	/**
+	 * Function to find index of value in arr[start...end] The function assumes
+	 * that value is present in in[]
+	 */
+	private int search(T arr[], int strt, int end, T value) {
+		int i;
+		for (i = strt; i <= end; i++) {
+			if (arr[i].equals(value))
+				return i;
+		}
+		return i;
+	}
+
 }

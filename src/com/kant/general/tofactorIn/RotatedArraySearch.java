@@ -13,6 +13,9 @@ package com.kant.general.tofactorIn;
  */
 public class RotatedArraySearch {
 
+	/**
+	 * @return
+	 */
 	public static int findInRotatedArray(int[] data, int item, int start,
 			int last) {
 		if (start == last && data[start] == item)

@@ -100,13 +100,14 @@ public class KMostFrequentWordsInAFile {
  *
  */
 class MTrieNode {
-	private boolean isAWord;
+	@SuppressWarnings("unused")
+	private boolean EOFWord;
 	private int frequency;
 	private int indexMinHeap;
 	private MTrieNode[] children;
 
 	public MTrieNode() {
-		isAWord = false;
+		EOFWord = false;
 		children = new MTrieNode[255];
 		Arrays.fill(children, null);
 		indexMinHeap = -1;
@@ -120,7 +121,7 @@ class MTrieNode {
 	 */
 	public MTrieNode insertWord(String input) {
 		if (input.isEmpty()) {
-			this.isAWord = true;
+			this.EOFWord = true;
 			frequency++;
 			return this;
 		}

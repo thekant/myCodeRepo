@@ -136,23 +136,30 @@ class AdjacencyGraph {
 	}
 
 	/**
-	 * The function returns one of the following values 0 --> If grpah is not
-	 * Eulerian 1 --> If graph has an Euler path (Semi-Eulerian) 2 --> If graph
-	 * has an Euler Circuit (Eulerian)
+	 * The function returns one of the following values
+	 *  0 --> If graph is not Eulerian 
+	 *  1 --> If graph has an Euler path (Semi-Eulerian) 
+	 *  2 --> If graph has an Euler Circuit (Eulerian)
 	 * 
 	 **/
 	private EULERPROPERTY isEulerian() {
-		// Check if all non-zero degree vertices are connected
+		/**
+		 *  Check if all non-zero degree vertices are connected
+		 */
 		if (isConnected() == false)
 			return EULERPROPERTY.NOT_EULERIAN;
 
-		// Count vertices with odd degree
+		/**
+		 * Count vertices with odd degree
+		 */
 		int odd = 0;
 		for (int i = 0; i < V; i++)
 			if (adj[i].size() % 2 != 0)
 				odd++;
 
-		// If count is more than 2, then graph is not Eulerian
+		/**
+		 *  If count is more than 2, then graph is not Eulerian
+		 */
 		if (odd > 2)
 			return EULERPROPERTY.NOT_EULERIAN;
 

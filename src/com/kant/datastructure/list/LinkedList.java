@@ -4,6 +4,10 @@
 package com.kant.datastructure.list;
 
 /**
+ * TODO
+ * http://www.geeksforgeeks.org/write-a-function-to-get-the-intersection-point-
+ * of-two-linked-lists/
+ * 
  * @author shaskant
  *
  */
@@ -463,5 +467,3 @@ public class LinkedList {
 	}
 
 }
-
-

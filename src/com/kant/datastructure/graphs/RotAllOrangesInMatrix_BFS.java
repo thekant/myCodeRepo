@@ -42,7 +42,7 @@ public class RotAllOrangesInMatrix_BFS {
 	}
 
 	/**
-	 * number of time frames needed to rot all oranges or return -1 if not
+	 * Number of time frames needed to rot all oranges or return -1 if not
 	 * possible.
 	 * 
 	 * @return
@@ -71,7 +71,6 @@ public class RotAllOrangesInMatrix_BFS {
 			// This flag is used to determine whether even a single fresh
 			// orange gets rotten due to rotten oranges in current time
 			// frame so we can increase the count of the required time.
-
 			/**
 			 * TODO: i have removed this flag .. although it defines a way of
 			 * doing this type of problem

@@ -10,7 +10,7 @@ package com.kant.sortingnsearching;
  * @author shaskant
  *
  */
-public class MaxHeap {
+public class MinHeap {
 	private int[] data;
 	private int size;
 	private int maxSize;
@@ -20,17 +20,17 @@ public class MaxHeap {
 	 * 
 	 * @param maxsize
 	 */
-	public MaxHeap(int maxsize) {
+	public MinHeap(int maxsize) {
 		this.maxSize = maxsize;
 		this.size = 0;
 		data = new int[this.maxSize + 1];
-		data[0] = Integer.MAX_VALUE;
+		data[0] = Integer.MIN_VALUE;
 	}
 
 	/**
 	 * 
 	 */
-	public MaxHeap(int[] aData) {
+	public MinHeap(int[] aData) {
 		size = aData.length;
 		maxSize = size;
 		data = new int[maxSize + 1];
@@ -44,7 +44,7 @@ public class MaxHeap {
 	 * @param aData
 	 * @param aMaxSize
 	 */
-	public MaxHeap(int[] aData, int aMaxSize) {
+	public MinHeap(int[] aData, int aMaxSize) {
 		this(aMaxSize);
 		System.arraycopy(aData, 0, data, 1, aData.length);
 		size = aData.length;
@@ -85,17 +85,17 @@ public class MaxHeap {
 	private void heapify(int pos) {
 		int leftC = getLeftChildPos(pos);
 		int rightC = getRightChildPos(pos);
-		int greaterElemPos = leftC;
+		int smallerElemPos = leftC;
 		if (isValid(rightC)) {
-			if (data[leftC] > data[rightC])
-				greaterElemPos = leftC;
+			if (data[leftC] < data[rightC])
+				smallerElemPos = leftC;
 			else
-				greaterElemPos = rightC;
+				smallerElemPos = rightC;
 		}
 
-		if (isValid(greaterElemPos) && data[pos] < data[greaterElemPos]) {
-			swapp(pos, greaterElemPos);
-			heapify(greaterElemPos);
+		if (isValid(smallerElemPos) && data[pos] > data[smallerElemPos]) {
+			swapp(pos, smallerElemPos);
+			heapify(smallerElemPos);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class MaxHeap {
 	 * 
 	 * @return
 	 */
-	public int getMax() {
+	public int getMin() {
 		return data[FRONT];
 	}
 
@@ -133,13 +133,12 @@ public class MaxHeap {
 	 * 
 	 * @param item
 	 */
-	public void replaceMaxElem(int item) {
+	public void replaceMinElem(int item) {
 		data[FRONT] = item;
 		heapify(FRONT);
 	}
 
 	/**
-	 * online insertion to heap.
 	 * 
 	 * @param item
 	 */
@@ -178,48 +177,20 @@ public class MaxHeap {
 		int flow = 1;
 		switch (flow) {
 		case 1:
-			MaxHeap heap = new MaxHeap(testData);
-			System.out.println(heap.getMax());// 96
-			heap.replaceMaxElem(2);
-			System.out.println(heap.getMax());// 48
+			MinHeap heap = new MinHeap(testData);
+			System.out.println(heap.getMin());
+			heap.replaceMinElem(2);
+			System.out.println(heap.getMin());
 			MyUtil.printArrayInt(heap.sort());
 			break;
 		case 2:
-			MaxHeap heap2 = new MaxHeap(testData, 20);
-			heap2.replaceMaxElem(2);// new max 48 as 96 is replaced by 2
+			MinHeap heap2 = new MinHeap(testData, 20);
+			heap2.replaceMinElem(2);// new max 48 as 96 is replaced by 2
 			heap2.insert(50);
-			System.out.println(heap2.getMax());// 50
+			System.out.println(heap2.getMin());// 50
 			MyUtil.printArrayInt(heap2.sort());
 			break;
 		}
 	}
 
 }
-
-/**
- * 
- * Method 3 (Using Max-Heap) We can also use Max Heap for finding the k’th
- * smallest element. Following is algorithm. 1) Build a Max-Heap MH of the first
- * k elements (arr[0] to arr[k-1]) of the given array. O(k)
- * 
- * 2) For each element, after the k’th element (arr[k] to arr[n-1]), compare it
- * with root of MH.
- * 
- * ……a) If the element is less than the root then make it root and call heapify
- * for MH
- * 
- * ……b) Else ignore it. // The step 2 is O((n-k)*logk)
- * 
- * 3) Finally, root of the MH is the kth smallest element.
- * 
- * NOTE: basically from Max heap take out n-k max elements .. the item left on
- * top is kth smallest number Time complexity of this solution is O(k +
- * (n-k)*Logk)
- **/
-
-/**
- * Method 2 (Using Min Heap – HeapSelect) We can find k’th smallest element in
- * time complexity better than O(nLogn). A simple optimization is to create a
- * Min Heap of the given n elements and call extractMin() k times. The following
- * is C++ implementation of above method.
- */

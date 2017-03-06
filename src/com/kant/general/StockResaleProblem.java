@@ -15,7 +15,7 @@ public class StockResaleProblem {
 	 */
 	public static void main(String[] args) {
 		int[] stockData = { 190, 180, 260, 310, 410, 230, 695 };
-		System.out.println(new StockResaleProblem().maxDifference(stockData));
+		System.out.println(new StockResaleProblem().maxProfit(stockData));
 	}
 
 	/**
@@ -27,18 +27,20 @@ public class StockResaleProblem {
 	 * @param arr_size
 	 * @return
 	 */
-	public int maxDifference(int arr[]) {
-		int maxDiff = -1;
-		int minElement = arr[0];
-		for (int i = 1; i < arr.length; i++) {
-			if (arr[i] < minElement) {
-				minElement = arr[i];
-			}else if (arr[i] - minElement > maxDiff) {
-				maxDiff = arr[i] - minElement;
-			}
+	public int maxProfit(int arr[]) {
+		int profit = 0;
+		int minElement = Integer.MAX_VALUE;
+		for (int i = 0; i < arr.length; i++) {
+			minElement = Math.min(minElement, arr[i]);
+			// if (arr[i] < minElement) {
+			// minElement = arr[i];
+			// }
+			profit = Math.max(arr[i] - minElement, profit);
+			// if (arr[i] - minElement > profit) {
+			// profit = arr[i] - minElement;
+			// }
 		}
 		System.out.println(minElement);
-		return maxDiff;
+		return profit;
 	}
-
 }

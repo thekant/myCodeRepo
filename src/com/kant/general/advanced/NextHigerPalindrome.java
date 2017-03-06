@@ -3,6 +3,7 @@ package com.kant.general.advanced;
 import java.util.Arrays;
 
 /**
+ * Prints next higher palindrome.
  * 
  * @author shashi
  * 
@@ -14,8 +15,8 @@ public class NextHigerPalindrome {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// int num[] = {  };
-		int num[] = toDigitArray("2133");//"94187978322","99999","808"
+		// int num[] = { };
+		int num[] = toDigitArray("2133");// "94187978322","99999","808"
 		NextHigerPalindrome solver = new NextHigerPalindrome();
 
 		int[] result = solver.nextHigherPalindrome(num);
@@ -75,7 +76,9 @@ public class NextHigerPalindrome {
 		if (left < 0 || result[left] < result[right])
 			palindromeOrLeftSmaller = true;
 
-		// mirror the remaining i.e make it palindrome
+		/**
+		 *  mirror the remaining i.e make it palindrome
+		 */
 		while (left >= 0) {
 			result[right++] = result[left--];
 		}
@@ -83,7 +86,6 @@ public class NextHigerPalindrome {
 		if (palindromeOrLeftSmaller) {
 			int carry = 1;
 			left = mid - 1;
-
 			// update mid and take carry over for next phase
 			if (n % 2 == 1) {
 				result[mid] += carry;
@@ -98,7 +100,7 @@ public class NextHigerPalindrome {
 				result[left] += carry;
 				carry = result[left] / 10;
 				result[left] %= 10;
-				
+
 				result[right++] = result[left--];
 			}
 		}
@@ -133,11 +135,11 @@ public class NextHigerPalindrome {
 			System.out.print(num);
 		}
 	}
-	
-	public static int[] toDigitArray(String input){
-		int[] result=new int[input.length()];
-		for(int i=0;i<input.length();i++)
-			result[i]=input.charAt(i) - '0';
+
+	public static int[] toDigitArray(String input) {
+		int[] result = new int[input.length()];
+		for (int i = 0; i < input.length(); i++)
+			result[i] = input.charAt(i) - '0';
 		return result;
 	}
 }

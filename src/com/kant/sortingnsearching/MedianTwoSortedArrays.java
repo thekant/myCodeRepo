@@ -12,7 +12,7 @@ package com.kant.sortingnsearching;
 public class MedianTwoSortedArrays {
 
 	/**
-	 * @param args
+	 * @param arg
 	 */
 	public static void main(String[] args) {
 		int ar1[] = { 1, 2, 3, 6 };

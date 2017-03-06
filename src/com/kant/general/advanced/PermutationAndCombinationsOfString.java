@@ -104,6 +104,23 @@ public class PermutationAndCombinationsOfString {
 	}
 
 	/**
+	 * TreeMap will sort according to natural ordering of keys.
+	 * 
+	 * @param in
+	 * @return
+	 */
+	private static Map<Character, Integer> getCharMap(char[] in) {
+		Map<Character, Integer> charMap = new TreeMap<>();
+		for (int i = 0; i < in.length; i++) {
+			if (charMap.containsKey(in[i])) {
+				charMap.put(in[i], charMap.get(in[i]).intValue() + 1);
+			} else
+				charMap.put(in[i], 1);
+		}
+		return charMap;
+	}
+
+	/**
 	 * support for duplicate characters added.
 	 * 
 	 * https://www.youtube.com/watch?v=nYFd7VHKyWQ&t=1185s
@@ -111,6 +128,10 @@ public class PermutationAndCombinationsOfString {
 	 * @param in
 	 */
 	public static void permutation(char[] in) {
+		/**
+		 * use a charMap to store count of each character in string. and then
+		 * build theINput with all unique chars in sorted order.
+		 */
 		Map<Character, Integer> charMap = getCharMap(in);
 		int[] count = new int[charMap.entrySet().size()];
 		char[] theInput = new char[charMap.entrySet().size()];
@@ -120,13 +141,13 @@ public class PermutationAndCombinationsOfString {
 			theInput[index] = mapEntry.getKey();
 			index++;
 		}
-		// initially, used[] set to false and depth is 0
+		// initially depth is 0
 		StringBuffer out = new StringBuffer();
 		permute(theInput, out, count, 0);
 	}
 
 	/**
-	 * 
+	 * Backtracking algo.
 	 */
 	private static void permute(char[] in, StringBuffer out, int[] count,
 			int depth) {
@@ -168,23 +189,6 @@ public class PermutationAndCombinationsOfString {
 
 		StringBuffer out = new StringBuffer();
 		combine(theInput, count, out, 0);
-	}
-
-	/**
-	 * TreeMap will sort according to natural ordering of keys.
-	 * 
-	 * @param in
-	 * @return
-	 */
-	private static Map<Character, Integer> getCharMap(char[] in) {
-		Map<Character, Integer> charMap = new TreeMap<>();
-		for (int i = 0; i < in.length; i++) {
-			if (charMap.containsKey(in[i])) {
-				charMap.put(in[i], charMap.get(in[i]).intValue() + 1);
-			} else
-				charMap.put(in[i], 1);
-		}
-		return charMap;
 	}
 
 	/**

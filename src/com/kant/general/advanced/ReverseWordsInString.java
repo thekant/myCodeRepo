@@ -24,9 +24,8 @@ public class ReverseWordsInString {
 	 */
 	public static void reverseWords(char[] input) {
 		int startIndex = -1;
-		int index = 0;
 		// revert every single word in this input
-		while (index < input.length) {
+		for (int index = 0; index < input.length; index++) {
 			if (startIndex == -1 && input[index] != ' ') {
 				startIndex = index;
 			}
@@ -35,7 +34,6 @@ public class ReverseWordsInString {
 				reverseArray(input, startIndex, index);
 				startIndex = -1;
 			}
-			index++;
 		}
 
 		// revert the whole array

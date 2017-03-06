@@ -4,7 +4,7 @@
 package com.kant.general.advanced;
 
 /**
- * subgrid of size 3×3 contains exactly one instance of the digits from 1 to 9
+ * Subgrid of size 3×3 contains exactly one instance of the digits from 1 to 9
  * http://www.geeksforgeeks.org/backtracking-set-7-suduku/
  * 
  * @author shashi
@@ -16,6 +16,7 @@ public class SudokuProblem {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//for 3 each {} in a row  with total 3 rows  
 		int grid[][] = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
 				{ 5, 2, 0, 0, 0, 0, 0, 0, 0 }, { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
 				{ 0, 0, 3, 0, 1, 0, 0, 8, 0 }, { 9, 0, 0, 8, 6, 3, 0, 0, 5 },
@@ -23,10 +24,10 @@ public class SudokuProblem {
 				{ 0, 0, 0, 0, 0, 0, 0, 7, 4 }, { 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
 
 		SudokuProblem problem = new SudokuProblem();
-		problem.printGrid(grid);
+		//problem.printGrid(grid);
 		
-		//if (problem.solveSudoku(grid))
-			//problem.printGrid(grid);
+		if (problem.solveSudoku(grid))
+			problem.printGrid(grid);
 	}
 
 	/**
