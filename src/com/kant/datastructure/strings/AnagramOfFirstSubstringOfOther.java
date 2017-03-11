@@ -50,7 +50,7 @@ public class AnagramOfFirstSubstringOfOther {
 
 		// sliding window concept from Rabin Karp Algorithm
 		for (i = M; i < N; i++) {
-			// verify if last window has a match
+			// verify if last window has a match.
 			if (compareTwoArraysEquality(patternHash, textHash, 256)) {
 				System.out.println(text.substring(i - M, i));
 				return;
@@ -80,6 +80,7 @@ public class AnagramOfFirstSubstringOfOther {
 		}
 		return true;
 	}
+	
 
 	/**
 	 * Brute Force O(mn) when using charsequence

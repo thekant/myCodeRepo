@@ -80,6 +80,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 		tree.traverseLevelOrder2();
 		System.out.println();
 		//tree.traverseLevelOrder();
-		tree.printSpiral();
+		//tree.printSpiral();
+		System.out.println(tree.getDiameter());
 	}
 }

@@ -20,26 +20,31 @@ public class CountSmallerElementsOnRightSide {
 		System.out.println();
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		int[] arr = { 10, 6, 15, 20, 30, 5, 7 };
-
-		printArray(arr);
-
+		// printArray(arr);
 		int[] countSmaller = countSmallerElementsOnRightSide(arr);
-
+		//for (int i = 0; i < arr.length; i++) {
+			//countSmaller[i] = arr.length - countSmaller[i] + 1;
+		//}
 		printArray(countSmaller);
 	}
 
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 */
 	public static int[] countSmallerElementsOnRightSide(int[] arr) {
 		int n = arr.length;
 		int[] countSmaller = new int[n];
 		TheAVLTree tree = new TheAVLTree();
 		for (int i = n - 1; i >= 0; i--)
 			tree.insert(arr[i], countSmaller, i);
-
-		System.out.println("calling");
-		tree.printInOrder();
-
 		return countSmaller;
 	}
 }

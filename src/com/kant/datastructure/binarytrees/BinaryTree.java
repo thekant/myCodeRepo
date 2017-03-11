@@ -73,6 +73,40 @@ public abstract class BinaryTree<T> {
 	}
 
 	/**
+	 * calculates height along with the diameter<br/>
+	 * 
+	 * O(n)
+	 */
+	private int diameter(TreeNode<T> root, TheHeight theHeight) {
+		if (root == null) {
+			theHeight.value = 0;
+			return 0;
+		}
+
+		TheHeight lh = new TheHeight();
+		TheHeight rh = new TheHeight();
+
+		int ldiameter = diameter(root.getLeft(), lh);
+		int rdiameter = diameter(root.getRight(), rh);
+
+		theHeight.value = Math.max(lh.value, rh.value) + 1;
+		return Math
+				.max(lh.value + rh.value + 1, Math.max(ldiameter, rdiameter));
+
+	}
+
+	/**
+	 * get diameter of tree.
+	 */
+	public int getDiameter() {
+		return diameter(root, new TheHeight());
+	}
+
+	class TheHeight {
+		int value = 0;
+	}
+
+	/**
 	 * 
 	 */
 	public void traverseInOrder() {
@@ -154,6 +188,9 @@ public abstract class BinaryTree<T> {
 				&& node.getRight() == null;
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isLeaf(TreeNode<T> node) {
 		return node.getLeft() == null && node.getRight() == null;
 	}
@@ -200,8 +237,8 @@ public abstract class BinaryTree<T> {
 		}
 
 		// Recur for left and right subtrees
-		leftViewUtil(node.left, level + 1);
-		leftViewUtil(node.right, level + 1);
+		leftViewUtil(node.getLeft(), level + 1);
+		leftViewUtil(node.getRight(), level + 1);
 	}
 
 	/**
@@ -262,7 +299,7 @@ public abstract class BinaryTree<T> {
 		if (inStrt > inEnd)
 			return null;
 
-		/*
+		/**
 		 * Pick current node from Preorder traversal using preIndex and
 		 * increment preIndex
 		 */
@@ -272,14 +309,16 @@ public abstract class BinaryTree<T> {
 		if (inStrt == inEnd)
 			return tNode;
 
-		/* Else find the index of this node in Inorder traversal */
+		/**
+		 * Else find the index of this node in Inorder traversal
+		 */
 		int inIndex = search(in, inStrt, inEnd, tNode.data);
 
-		/*
+		/**
 		 * Using index in Inorder traversal, construct left and right subtress
 		 */
-		tNode.left = buildTree(in, pre, inStrt, inIndex - 1);
-		tNode.right = buildTree(in, pre, inIndex + 1, inEnd);
+		tNode.setLeft(buildTree(in, pre, inStrt, inIndex - 1));
+		tNode.setRight(buildTree(in, pre, inIndex + 1, inEnd));
 
 		return tNode;
 	}

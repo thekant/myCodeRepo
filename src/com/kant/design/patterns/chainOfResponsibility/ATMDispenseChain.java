@@ -20,10 +20,12 @@ public class ATMDispenseChain {
 		this.c1 = new Dollar50Dispenser();
 		DispenseChain c2 = new Dollar20Dispenser();
 		DispenseChain c3 = new Dollar10Dispenser();
+		//DispenseChain nothingDispenser=new NothingDispenser();
 
 		// set the chain of responsibility
-		c1.setNextChain(c2);
-		c2.setNextChain(c3);
+		c1.setNext(c2);
+		c2.setNext(c3);
+		//c3.setNext(nothingDispenser);
 	}
 
 	/**
@@ -71,10 +73,18 @@ class Currency {
  * @author shaskant
  *
  */
-interface DispenseChain {
-	void setNextChain(DispenseChain nextChain);
+abstract class DispenseChain {
+	protected DispenseChain successor = null;
 
-	void dispense(Currency cur);
+	protected DispenseChain getNext() {
+		return successor;
+	}
+
+	public void setNext(DispenseChain next) {
+		this.successor = next;
+	}
+
+	abstract void dispense(Currency cur);
 }
 
 /**
@@ -82,13 +92,7 @@ interface DispenseChain {
  * @author shaskant
  *
  */
-class Dollar50Dispenser implements DispenseChain {
-	private DispenseChain chain;
-
-	@Override
-	public void setNextChain(DispenseChain nextChain) {
-		this.chain = nextChain;
-	}
+class Dollar50Dispenser extends DispenseChain {
 
 	@Override
 	public void dispense(Currency cur) {
@@ -97,9 +101,9 @@ class Dollar50Dispenser implements DispenseChain {
 			int remainder = cur.getAmount() % 50;
 			System.out.println("Dispensing " + num + " 50$ note");
 			if (remainder != 0)
-				this.chain.dispense(new Currency(remainder));
+				this.getNext().dispense(new Currency(remainder));
 		} else {
-			this.chain.dispense(cur);
+			this.getNext().dispense(cur);
 		}
 	}
 }
@@ -109,14 +113,7 @@ class Dollar50Dispenser implements DispenseChain {
  * @author shaskant
  *
  */
-class Dollar20Dispenser implements DispenseChain {
-
-	private DispenseChain chain;
-
-	@Override
-	public void setNextChain(DispenseChain nextChain) {
-		this.chain = nextChain;
-	}
+class Dollar20Dispenser extends DispenseChain {
 
 	@Override
 	public void dispense(Currency cur) {
@@ -125,9 +122,9 @@ class Dollar20Dispenser implements DispenseChain {
 			int remainder = cur.getAmount() % 20;
 			System.out.println("Dispensing " + num + " 20$ note");
 			if (remainder != 0)
-				this.chain.dispense(new Currency(remainder));
+				getNext().dispense(new Currency(remainder));
 		} else {
-			this.chain.dispense(cur);
+			getNext().dispense(cur);
 		}
 	}
 }
@@ -137,14 +134,7 @@ class Dollar20Dispenser implements DispenseChain {
  * @author shaskant
  *
  */
-class Dollar10Dispenser implements DispenseChain {
-
-	private DispenseChain chain;
-
-	@Override
-	public void setNextChain(DispenseChain nextChain) {
-		this.chain = nextChain;
-	}
+class Dollar10Dispenser extends DispenseChain {
 
 	@Override
 	public void dispense(Currency cur) {
@@ -153,9 +143,18 @@ class Dollar10Dispenser implements DispenseChain {
 			int remainder = cur.getAmount() % 10;
 			System.out.println("Dispensing " + num + " 10$ note");
 			if (remainder != 0)
-				this.chain.dispense(new Currency(remainder));
+				getNext().dispense(new Currency(remainder));
 		} else {
-			this.chain.dispense(cur);
+			getNext().dispense(cur);
 		}
+	}
+}
+
+class NothingDispenser extends DispenseChain {
+
+	@Override
+	void dispense(Currency cur) {
+		System.out.println("cannot dispence: " + cur.getAmount()
+				+ " is not a multiple of 10");
 	}
 }

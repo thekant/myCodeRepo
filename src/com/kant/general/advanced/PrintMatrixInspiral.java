@@ -4,6 +4,12 @@
 package com.kant.general.advanced;
 
 /**
+ * For anti spiral .. store spiral print in Stack.
+ * 
+ * http://www.geeksforgeeks.org/print-matrix-antispiral-form/
+ * 
+ * http://www.geeksforgeeks.org/print-a-given-matrix-in-spiral-form/
+ * 
  * @author shashi
  * 
  */
@@ -22,7 +28,6 @@ public class PrintMatrixInspiral {
 	}
 
 	/**
-	 * 
 	 * @param mat
 	 * @param m
 	 * @param n
@@ -40,44 +45,16 @@ public class PrintMatrixInspiral {
 	}
 
 	/**
-	 * Works for m==n case
-	 * 
-	 * @param mat
-	 * @param m
-	 *            number of rows
-	 * @param n
-	 *            number of columns
-	 */
-	public static void printMatrixInSpiral(int[][] mat, int m, int n) {
-		for (int layer = 0; layer < m / 2 + 1; layer++) {
-			int first = layer;
-
-			// top left to top right
-			for (int i = first; i <= n - 1 - layer; i++) {
-				System.out.print(mat[first][i] + " ");
-			}
-
-			// top right to bottom right
-			for (int i = first + 1; i <= m - 1 - layer; i++) {
-				System.out.print(mat[i][n - 1 - layer] + " ");
-			}
-
-			// bottom right to bottom left
-			for (int i = n - 1 - layer - 1; i >= first; i--) {
-				System.out.print(mat[m - 1 - layer][i] + " ");
-			}
-
-			// bottom left to top left
-			for (int i = m - 1 - layer - 1; i > first; i--) {
-				System.out.print(mat[i][first] + " ");
-			}
-
-		}
-	}
-
-	/**
 	 * works for any case
 	 * 
+	 *  (rowG,ColG)+-------------------+
+	 *  		   |                   |
+	 *             |                   |
+	 *             |                   |
+	 *             +-------------------+ (m-1,n-1)
+	 *  
+	 *  row++ -> n-- -> m-- -> col++
+	 *  
 	 * @param m
 	 * @param n
 	 * @param a
@@ -85,34 +62,41 @@ public class PrintMatrixInspiral {
 	public static void spiralPrint(int m, int n, int[][] a) {
 		int rowG = 0, colG = 0;
 		while (rowG < m && colG < n) {
-			// first row is printed
+			/**
+			 * print first row
+			 */
 			for (int i = colG; i < n; i++) {
 				System.out.print(a[rowG][i] + " ");
 			}
-			rowG++; // won't have to print this row again
+			rowG++; // reduce box size from top.
 
-			// last column of box is printed
+			/**
+			 * last column of box is printed
+			 */
 			for (int i = rowG; i < m; i++) {
 				System.out.print(a[i][n - 1] + " ");
 			}
-			n--;// won't have to print this column again
+			n--; // reduce box size from right
 
-			// if there still a row left to print
+			/**
+			 * if there still a row left to print
+			 */
 			if (rowG < m) {
 				for (int i = n - 1; i >= colG; i--) {
 					System.out.print(a[m - 1][i] + " ");
 				}
-				m--;// last row of box is printed
+				m--; // reduce box size from bottom.
 			}
 
-			// if there still a column left to print
+			/**
+			 *  if there still a column left to print
+			 */
 			if (colG < n) {
 				for (int i = m - 1; i >= rowG; i--) {
 					System.out.print(a[i][colG] + " ");
 				}
-				colG++;// first column of box is printed
+				colG++; // reduce box size from left
 			}
-
 		}
 
 	}
