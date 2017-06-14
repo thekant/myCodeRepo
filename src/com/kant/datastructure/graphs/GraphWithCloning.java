@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Set;
  *
  */
 public class GraphWithCloning<T> {
-	private GraphNode<T> srcG;
+	private GraphNode<T> srcG; // since it's connected graph
 
 	/**
 	 * 
@@ -138,6 +137,12 @@ public class GraphWithCloning<T> {
 
 }
 
+/**
+ * 
+ * @author shaskant
+ *
+ * @param <T>
+ */
 class GraphNode<T> {
 	private T info;
 	private List<GraphNode<T>> neighbours;

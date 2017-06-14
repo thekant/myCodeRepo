@@ -151,9 +151,6 @@ class MinHeap {
 		this.size = aheapStorage.length;
 		capacity = size;
 		System.arraycopy(aheapStorage, 0, heapStorage, 1, size);
-		// for (int i = 0; i < aheapStorage.length; i++) {
-		// heapStorage[i + 1] = aheapStorage[i];
-		// }
 
 		buildHeap(size);
 	}
@@ -183,7 +180,7 @@ class MinHeap {
 					&& heapStorage[getParent(current)].getFrequency() > heapStorage[current]
 							.getFrequency()) {
 				swapp(getParent(current), current);
-				current = current / 2;
+				current = getParent(current);
 			}
 		} else {
 			System.out.println("cannot insert : no space left");

@@ -25,6 +25,7 @@ public class FindingEquilibriumPoint {
 				sum1 = sum1 + a[i++];
 			else
 				sum2 = sum2 + a[j--];
+			
 			if (sum1 == sum2 && i == j)
 				System.out.printf(
 						"\n equilibrium point is i = %d and value is = %d \n",

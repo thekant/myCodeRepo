@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author shashi
  * 
  */
-public class NextHigerPalindrome {
+public class NextHigherPalindrome {
 
 	/**
 	 * 
@@ -17,7 +17,7 @@ public class NextHigerPalindrome {
 	public static void main(String[] args) {
 		// int num[] = { };
 		int num[] = toDigitArray("2133");// "94187978322","99999","808"
-		NextHigerPalindrome solver = new NextHigerPalindrome();
+		NextHigherPalindrome solver = new NextHigherPalindrome();
 
 		int[] result = solver.nextHigherPalindrome(num);
 		printData(result);

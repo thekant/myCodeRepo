@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class BSTTree<E extends Integer> {
 	private Node<E> root = null;
-	private Node<E> prev = null; // for BST property
 
 	/**
 	 * 
@@ -179,27 +178,29 @@ public class BSTTree<E extends Integer> {
 		return isBST(root);
 	}
 
+	private Node<E> prev = null; // for BST property
+
 	/**
 	 * Logic to find if tree maintains BST property.
 	 * 
-	 * @param traveler
+	 * @param node
 	 * @return
 	 */
-	private boolean isBST(Node<E> traveler) {
+	private boolean isBST(Node<E> node) {
 		// traverse the tree in inOrder fashion and keep track of prev node
-		if (traveler != null) {
-			if (!isBST(traveler.left))
+		if (node != null) {
+			if (!isBST(node.left))
 				return false;
 
 			// Allows only distinct valued nodes
 			if (prev != null
-					&& traveler.getItem().intValue() <= prev.getItem()
+					&& node.getItem().intValue() <= prev.getItem()
 							.intValue())
 				return false;
 
-			prev = traveler;
+			prev = node;
 
-			return isBST(traveler.right);
+			return isBST(node.right);
 		}
 
 		return true;

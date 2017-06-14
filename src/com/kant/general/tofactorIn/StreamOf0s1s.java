@@ -32,12 +32,12 @@ public class StreamOf0s1s {
 		int end = startIndex + 1;
 		int mid;
 		while (end < endIndex && A[end] != 1) {
-			start = end;
+			start = end; //A[start]!=1 is sure thing.
 			end *= 2;
 		}
 		if (end > endIndex && A[endIndex - 1] != 1)
 			return -1;
-
+		
 		while (start < end && A[start + 1] != 1) {
 			mid = (start + end) / 2;
 			if (A[mid] == 0)

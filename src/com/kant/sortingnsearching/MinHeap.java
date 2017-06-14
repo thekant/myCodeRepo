@@ -12,7 +12,7 @@ package com.kant.sortingnsearching;
  */
 public class MinHeap {
 	private int[] data;
-	private int size;
+	private int size; // no. of elements in heap at any instance.
 	private int maxSize;
 	private static final int FRONT = 1;// marks the front index of this heap
 
@@ -111,6 +111,10 @@ public class MinHeap {
 		return pos / 2;
 	}
 
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
 	/**
 	 * @param pos
 	 * @param greaterElemPos
@@ -127,6 +131,15 @@ public class MinHeap {
 	 */
 	public int getMin() {
 		return data[FRONT];
+	}
+
+	public int extractMin() {
+		int result = getMin();
+		int replacer = data[size];
+		data[size] = -1;
+		size--;
+		replaceMinElem(replacer);
+		return result;
 	}
 
 	/**

@@ -19,7 +19,10 @@ public class HandleBigFactorials {
 	}
 
 	/**
-	 * This function finds factorial of large numbers and prints them
+	 * This function finds factorial of large numbers and prints them.
+	 * 
+	 * NOTE: number is stored in array in reverse fashion.
+	 * 
 	 * 
 	 * @param n
 	 */

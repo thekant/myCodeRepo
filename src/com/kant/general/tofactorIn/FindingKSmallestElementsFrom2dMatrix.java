@@ -11,10 +11,14 @@ package com.kant.general.tofactorIn;
 public class FindingKSmallestElementsFrom2dMatrix {
 	public final static int M = 3, N = 4;
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		int[][] dataArray = new int[][] { { 1, 4, 6, 7 }, { 5, 8, 10, 11 },
 				{ 7, 9, 41, 51 } };
-		printKSmalletsElements(dataArray);
+		printKSmallestElements(dataArray);
 
 	}
 
@@ -23,7 +27,7 @@ public class FindingKSmallestElementsFrom2dMatrix {
 	 * 
 	 * @param dataArray
 	 */
-	private static void printKSmalletsElements(int[][] dataArray) {
+	private static void printKSmallestElements(int[][] dataArray) {
 		HeapNew heap = new HeapNew(dataArray[0]);
 		HeapNode nextMin;
 
@@ -38,7 +42,7 @@ public class FindingKSmallestElementsFrom2dMatrix {
 				heap.setNewData(nextMin.getRow() + 1, nextMin.getCol(),
 						dataArray[nextMin.getRow() + 1][nextMin.getCol()]);
 			}
-			//no element left in the column
+			// no element left in the column
 			else if (nextMin.getRow() == M - 1) {
 				heap.setNewData(nextMin.getRow(), nextMin.getCol(),
 						Integer.MAX_VALUE);
@@ -58,10 +62,6 @@ public class FindingKSmallestElementsFrom2dMatrix {
 class HeapNew {
 	HeapNode[] data;
 	int heapSize;
-
-	// public static void main(String[] args) {
-	// new HeapNew(new int[] { 1, 3, 5, 7, 12, 3, 9, 0, 10 });
-	// }
 
 	/**
 	 * Initially all row and column values are 0,0
@@ -96,20 +96,8 @@ class HeapNew {
 	 * 
 	 */
 	private void buildHeap() {
-		for (int count = (heapSize) / 2 - 1; count >= 0; count--) {
+		for (int count = (heapSize) / 2 - 1; count >= 0; count--)
 			heapify(count, heapSize);
-		}
-
-		System.out
-				.println("===================The Min Heap ====================");
-		for (int i = 0; i < heapSize; i++) {
-			if (i >= 1)
-				System.out.print(",");
-			System.out.print(data[i].getValue());
-		}
-		System.out
-				.println("\n============================================================");
-
 	}
 
 	/**
@@ -144,15 +132,11 @@ class HeapNew {
 	/**
 	 * it's min heap so running this sort will non-decreasing data.
 	 */
-	public void sortHeap() {
-		for (int count = 1; count < heapSize; count++) {
-			HeapNode temp = data[0];
-			data[0] = data[heapSize - count];
-			data[heapSize - count] = temp;
-			heapify(0, heapSize - count);
-		}
-	}
-
+	/*
+	 * public void sortHeap() { for (int count = 1; count < heapSize; count++) {
+	 * HeapNode temp = data[0]; data[0] = data[heapSize - count]; data[heapSize
+	 * - count] = temp; heapify(0, heapSize - count); } }
+	 */
 	/**
 	 * 
 	 * @param index

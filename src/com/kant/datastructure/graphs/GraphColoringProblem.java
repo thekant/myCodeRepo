@@ -89,7 +89,7 @@ public class GraphColoringProblem {
 		graph.addEdge(2, 3);
 		graph.printGraph();
 		GraphColoringProblem prob = new GraphColoringProblem(graph);
-		if (prob.solveGraphColorProblem(0, 2)) {
+		if (prob.solveGraphColorProblem(0, 3)) {
 			System.out.println("Graph coloring possible");
 		} else {
 			System.out.println("Graph coloring not possible");

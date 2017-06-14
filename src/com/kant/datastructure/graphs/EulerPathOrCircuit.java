@@ -142,12 +142,12 @@ class AdjacencyGraph {
 	 *  2 --> If graph has an Euler Circuit (Eulerian)
 	 * 
 	 **/
-	private EULERPROPERTY isEulerian() {
+	private EULERPROP isEulerian() {
 		/**
 		 *  Check if all non-zero degree vertices are connected
 		 */
 		if (isConnected() == false)
-			return EULERPROPERTY.NOT_EULERIAN;
+			return EULERPROP.NOT_EULERIAN;
 
 		/**
 		 * Count vertices with odd degree
@@ -161,23 +161,23 @@ class AdjacencyGraph {
 		 *  If count is more than 2, then graph is not Eulerian
 		 */
 		if (odd > 2)
-			return EULERPROPERTY.NOT_EULERIAN;
+			return EULERPROP.NOT_EULERIAN;
 
 		// If odd count is 2, then semi-eulerian.
 		// If odd count is 0, then eulerian
 		// Note that odd count can never be 1 for undirected graph
-		return (odd == 2) ? EULERPROPERTY.EULER_PATH
-				: EULERPROPERTY.EULER_CIRCUIT;
+		return (odd == 2) ? EULERPROP.EULER_PATH
+				: EULERPROP.EULER_CIRCUIT;
 	}
 
 	/**
 	 * 
 	 */
-	public EULERPROPERTY test() {
-		EULERPROPERTY result = isEulerian();
-		if (result == EULERPROPERTY.NOT_EULERIAN)
+	public EULERPROP test() {
+		EULERPROP result = isEulerian();
+		if (result == EULERPROP.NOT_EULERIAN)
 			System.out.println("graph is not Eulerian");
-		else if (result == EULERPROPERTY.EULER_PATH)
+		else if (result == EULERPROP.EULER_PATH)
 			System.out.println("graph has a Euler path");
 		else
 			System.out.println("graph has a Euler cycle");
@@ -185,6 +185,6 @@ class AdjacencyGraph {
 	}
 }
 
-enum EULERPROPERTY {
+enum EULERPROP {
 	NOT_EULERIAN, EULER_PATH, EULER_CIRCUIT;
 }

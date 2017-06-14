@@ -23,84 +23,8 @@ public class PermutationAndCombinationsOfString {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		permutation("aabc".toCharArray());
-		// combinations("aabc".toCharArray());
-		// printAllpermutationsAndCombinations("aabc".toCharArray());
-	}
-
-	/**
-	 * dictionary to be implemented as trie.
-	 */
-	public static void getValidWordPermutations() {
-		// Set getValidWordsPermutation(char[] in):
-		// Set validWords = new HashSet();
-		// //initially, used[] set to false and depth is 0
-		// permuteWords(in, out, used, 0, validWords);
-		// return validWords;
-		//
-		// permuteWords(char[] in, buffer out, bool[] used, int depth, Set
-		// validWords):
-		// // if the current prefix is not present in the dictionary, then do
-		// not permute further with the rest of the unused letters
-		// if !dict.hasPrefix(out): //or dict.hasPrefix(out[out.length()])
-		// return
-		//
-		// if depth = in.length:
-		// return
-		//
-		// for (int i = 0; i < in.length; i++):
-		// if used[i] = true:
-		// continue
-		// used[i] = true
-		// out.append(in[i])
-		//
-		// //if current prefix is a word, add to the set
-		// if dict.isValidWord(out):
-		// validWords.add(out)
-		//
-		// permuteWords(in, used, out, depth +1, validWords)
-		//
-		// out.length = out.length -1
-		// used[i] = false
-	}
-
-	/**
-	 * utility method.
-	 * 
-	 * @param in
-	 */
-	public static void printAllpermutationsAndCombinations(char[] in) {
-		Map<Character, Integer> charMap = getCharMap(in);
-		int[] count = new int[charMap.entrySet().size()];
-		char[] theInput = new char[charMap.entrySet().size()];
-		int index = 0;
-		for (Entry<Character, Integer> mapEntry : charMap.entrySet()) {
-			count[index] = mapEntry.getValue();
-			theInput[index] = mapEntry.getKey();
-			index++;
-		}
-		StringBuffer out = new StringBuffer();
-		diffpermute(theInput, out, count, 0);
-	}
-
-	/**
-	 * 
-	 */
-	private static void diffpermute(char[] in, StringBuffer out, int[] count,
-			int depth) {
-		if (depth == in.length)
-			return;
-		for (int i = 0; i < in.length; i++) {
-			if (count[i] == 0)
-				continue;
-			count[i]--;
-			out.append(in[i]);
-			System.out.println(out);
-			diffpermute(in, out, count, depth + 1);
-
-			out.deleteCharAt(out.length() - 1);
-			count[i]++;
-		}
+		//permutation("aabc".toCharArray());
+		 combinations("aabc".toCharArray());
 	}
 
 	/**
@@ -206,13 +130,51 @@ public class PermutationAndCombinationsOfString {
 		for (int i = start; i < in.length; i++) {
 			if (count[i] == 0)
 				continue;
+			count[i]--;
 			out.append(in[i]);
 			System.out.println(out);
-			count[i]--;
+			
 			combine(in, count, out, i);
-
+			
 			out.deleteCharAt(out.length() - 1);
 			count[i]++;
 		}
 	}
+
+	/**
+	 * dictionary to be implemented as trie.
+	 */
+	public static void getValidWordPermutations() {
+		// Set getValidWordsPermutation(char[] in):
+		// Set validWords = new HashSet();
+		// //initially, used[] set to false and depth is 0
+		// permuteWords(in, out, used, 0, validWords);
+		// return validWords;
+		//
+		// permuteWords(char[] in, buffer out, bool[] used, int depth, Set
+		// validWords):
+		// // if the current prefix is not present in the dictionary, then do
+		// not permute further with the rest of the unused letters
+		// if !dict.hasPrefix(out): //or dict.hasPrefix(out[out.length()])
+		// return
+		//
+		// if depth = in.length:
+		// return
+		//
+		// for (int i = 0; i < in.length; i++):
+		// if used[i] = true:
+		// continue
+		// used[i] = true
+		// out.append(in[i])
+		//
+		// //if current prefix is a word, add to the set
+		// if dict.isValidWord(out):
+		// validWords.add(out)
+		//
+		// permuteWords(in, used, out, depth +1, validWords)
+		//
+		// out.length = out.length -1
+		// used[i] = false
+	}
+
 }

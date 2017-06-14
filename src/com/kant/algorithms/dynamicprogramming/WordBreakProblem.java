@@ -43,8 +43,7 @@ public class WordBreakProblem {
 	 * Recursive and simple solution .<br/>
 	 * Add memory for a substring that's already calculated [DP solution]
 	 * 
-	 * function(item,int POS)
-	 * Only variable is POS.
+	 * function(item,int POS) Only variable is POS.
 	 * 
 	 * store[POS] = function(item,POS);
 	 * 
@@ -52,19 +51,18 @@ public class WordBreakProblem {
 	 * @param item
 	 * @return
 	 */
-	public boolean wordBreakSolve(String item) {
-		if (item.length() == 0)
-			return true;
-		for (int i = 1; i <= item.length(); i++) {
+	public void wordBreakSolve(String item, int pos) {
+		if (item.length() == pos){
+			return;
+		}
+		for (int i = pos + 1; i <= item.length(); i++) {
 			// if current substring is in dictionary
-			if (this.containsWord(item.substring(0, i))) {
-				System.out.print(item.substring(0, i) + " ");
-				if (wordBreakSolve(item.substring(i))) {
-					return true;
-				}
+			if (this.containsWord(item.substring(pos, i))) {
+				System.out.print(item.substring(pos, i) + " ");
+				wordBreakSolve(item, i);
 			}
 		}
-		return false;
+		System.out.println();
 	}
 
 	/**
@@ -155,7 +153,8 @@ public class WordBreakProblem {
 				"mango", "icecream", "and", "go", "i", "hate", "ice", "cream" };
 
 		WordBreakProblem prob = new WordBreakProblem(dictionary);
-		prob.wordBreakRecursivePrint("ihatesamsung");
+		//prob.wordBreakRecursivePrint("ihatesamsung");
+		prob.wordBreakSolve("ihatesamsung",0);
 	}
 
 }

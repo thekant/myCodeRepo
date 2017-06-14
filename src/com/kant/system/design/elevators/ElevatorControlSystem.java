@@ -10,12 +10,21 @@ import java.util.TreeSet;
 
 /**
  * Elevator in this program implements following features - <br/>
+ * 
  * If elevator is going up or down, it checks for nearest floor request to
  * process first in that direction. <br/>
+ * 
  * If there is no request to process, it waits at last processed floor. <br/>
+ *
  * If a new request comes while elevator is processing a request. It process the
  * new request first if it is nearest than the processing floor in same
  * direction.
+ * 
+ * 
+ * For centralized System
+ * https://hellosmallworld123.wordpress.com/2014/08/03/design
+ * -an-object-oriented-elevator/
+ * 
  * 
  * @author shaskant
  *
@@ -31,8 +40,8 @@ public class ElevatorControlSystem {
 		Thread requestListenerThread = new Thread(new RequestListener(),
 				"RequestListenerThread");
 		// RequestProcessorThread to read Set and process requested floor
-		Thread requestProcessorThread = new Thread(new RequestProcessor(),
-				"RequestProcessorThread");
+		Thread requestProcessorThread = new Thread(
+				new ElevatorRequestProcessor(), "RequestProcessorThread");
 
 		Elevator.getInstance()
 				.setRequestProcessorThread(requestProcessorThread);
@@ -57,7 +66,7 @@ class Elevator {
 	private Elevator() {
 	}
 
-	private Thread requestProcessorThread = null;
+	private Thread requestProcessorElevator = null;
 
 	/**
 	 * make singleton
@@ -87,11 +96,11 @@ class Elevator {
 	}
 
 	public Thread getRequestProcessorThread() {
-		return requestProcessorThread;
+		return requestProcessorElevator;
 	}
 
 	public void setRequestProcessorThread(Thread requestProcessorThread) {
-		this.requestProcessorThread = requestProcessorThread;
+		this.requestProcessorElevator = requestProcessorThread;
 	}
 
 	public TreeSet<Integer> getRequestSet() {
@@ -102,86 +111,103 @@ class Elevator {
 		this.requestSet = requestSet;
 	}
 
-	public int getCurrentFloor() {
+	public int getFloor() {
 		return currentFloor;
 	}
 
 	/**
-	 * Only {@link RequestProcessor} can set the current floor and hence decides
-	 * the direction to move to.
+	 * Only {@link ElevatorRequestProcessor} can set the current floor and hence
+	 * decides the direction to move to.
 	 * 
-	 * @param currentfloor
+	 * @param requestedfloor
 	 * @throws InterruptedException
 	 */
-	public void setCurrentFloor(int currentfloor) throws InterruptedException {
-		if (this.currentFloor > currentfloor) {
+	public void setCurrentFloor(int requestedfloor) throws InterruptedException {
+		if (this.currentFloor > requestedfloor) {
 			setDirection(Direction.ELEVATOR_DOWN);
 		} else {
 			setDirection(Direction.ELEVATOR_UP);
 		}
-		this.currentFloor = currentfloor;
+		this.currentFloor = requestedfloor;
 
 		System.out.println("Floor : " + currentFloor);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 	}
 
 	/**
+	 * TODO Move this strategy out of this class. Delegate the responsibility to
+	 * decide next floor to process next.
+	 * 
 	 * @return next request to process based on elevator current floor and
 	 *         direction
 	 */
 	public synchronized int nextFloor() {
-		Integer floor = null;
+		Integer nxtFloor = null;
 
-		if (direction == Direction.ELEVATOR_UP) {
-			if (requestSet.ceiling(currentFloor) != null) {
-				// set to next greater floor closest to current floor
-				floor = requestSet.ceiling(currentFloor);
+		if (!requestSet.isEmpty()) {
+			if (direction == Direction.ELEVATOR_UP) {
+				if (requestSet.ceiling(currentFloor) != null) {
+					// set to next greater floor closest to current floor
+					nxtFloor = requestSet.ceiling(currentFloor);
+				} else {
+					/**
+					 * else based on request choose closest , can set lift to
+					 * downward direction
+					 */
+					nxtFloor = requestSet.floor(currentFloor);
+				}
 			} else {
-				// else based on request choose closest , can set lift to
-				// downward direction
-				floor = requestSet.floor(currentFloor);
-			}
-		} else {
-			if (requestSet.floor(currentFloor) != null) {
-				floor = requestSet.floor(currentFloor);
-			} else {
-				// else based on request choose closest , can set lift to upward
-				// direction
-				floor = requestSet.ceiling(currentFloor);
+				if (requestSet.floor(currentFloor) != null) {
+					nxtFloor = requestSet.floor(currentFloor);
+				} else {
+					/**
+					 * else based on request choose closest , can set lift to
+					 * upward direction
+					 */
+					nxtFloor = requestSet.ceiling(currentFloor);
+				}
 			}
 		}
 
-		if (floor == null) {
+		if (nxtFloor == null) {
 			try {
-				System.out.println("Waiting at Floor :" + getCurrentFloor());
-				wait();// only a new request can notify RequestProcessorThread.
+				/**
+				 * only a new request can notify RequestProcessorThread.
+				 */
+				System.out.println("Waiting at Floor :" + getFloor());
+				wait();
 			} catch (InterruptedException e) {
-				// in case some issue with elevator system .. print stack trace
-				// and return -1.
+				/**
+				 * in case some issue with elevator system .. print stack trace
+				 * and return -1.
+				 */
 				e.printStackTrace();
 			}
 		} else {
-			// Remove the request from Set as it is the request in Progress.
-			requestSet.remove(floor);
+			/**
+			 * Remove the request from Set as it is the request in Progress.
+			 */
+			requestSet.remove(nxtFloor);
 		}
-		return (floor == null) ? -1 : floor;
+		return (nxtFloor == null) ? -1 : nxtFloor;
 	}
 
 	/**
+	 * On events when a button is pressed.
 	 * 
 	 * @param f
 	 */
 	public synchronized void addFloor(int f) {
 		requestSet.add(f);
 
-		if (requestProcessorThread.getState() == Thread.State.WAITING) {
+		if (requestProcessorElevator.getState() == Thread.State.WAITING) {
 			// Notify processor thread that a new request has come if it is
 			// waiting
 			notify();
 		} else {
 			// Interrupt Processor thread to check if new request should be
 			// processed before current request or not.
-			requestProcessorThread.interrupt();
+			requestProcessorElevator.interrupt();
 		}
 	}
 
@@ -205,11 +231,12 @@ enum ElevatorStatus {
 }
 
 /**
+ * [Controller] Each elevator has a thread that runs it's request processing.
  * 
  * @author shaskant
  *
  */
-class RequestProcessor implements Runnable {
+class ElevatorRequestProcessor implements Runnable {
 
 	/**
 	 * running job
@@ -221,33 +248,33 @@ class RequestProcessor implements Runnable {
 		while (true) {
 			// get next floor to go to .. will make this thread wait if no
 			// requests are there no process
-			int floor = elevator.nextFloor();
+			int nxtFloor = elevator.nextFloor();
 			// get current floor
-			int currentFloor = elevator.getCurrentFloor();
+			int currentFloor = elevator.getFloor();
 			try {
 				// only process if next floor value > 0
-				if (floor >= 0) {
-					if (currentFloor > floor) {
+				if (nxtFloor >= 0) {
+					if (currentFloor > nxtFloor) {
 						// reach down to that floor
-						while (currentFloor > floor) {
+						while (currentFloor > nxtFloor) {
 							elevator.setCurrentFloor(--currentFloor);
 						}
 					} else {
 						// reach up to that floor
-						while (currentFloor < floor) {
+						while (currentFloor < nxtFloor) {
 							elevator.setCurrentFloor(++currentFloor);
 						}
 					}
-					System.out.println("Reached Floor : "
-							+ elevator.getCurrentFloor());
+					System.out
+							.println("Reached Floor : " + elevator.getFloor());
 				}
 			} catch (InterruptedException e) {
 				// If a new request has interrupted a current request processing
 				// then check
 				// >if the current request is already processed fine.
 				// >otherwise add it back in request Set again
-				if (elevator.getCurrentFloor() != floor) {
-					elevator.getRequestSet().add(floor);
+				if (elevator.getFloor() != nxtFloor) {
+					elevator.getRequestSet().add(nxtFloor);
 				}
 			}
 		}
@@ -275,9 +302,9 @@ class RequestListener implements Runnable {
 				e.printStackTrace();
 			}
 
+			Elevator elevator = Elevator.getInstance();
 			if (isValidFloorNumber(floorNumberStr)) {
 				System.out.println("User Pressed : " + floorNumberStr);
-				Elevator elevator = Elevator.getInstance();
 				elevator.addFloor(Integer.parseInt(floorNumberStr));
 			} else {
 				System.out.println("Floor Request Invalid : " + floorNumberStr);

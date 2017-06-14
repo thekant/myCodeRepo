@@ -7,9 +7,8 @@ import com.kant.sortingnsearching.MyUtil;
 
 /**
  * http://www.geeksforgeeks.org/rearrange-positive-and-negative-numbers-publish/
- * http
- * ://www.geeksforgeeks.org/rearrange-array-alternating-positive-negative-items
- * -o1-extra-space/
+ * http ://www.geeksforgeeks.org/rearrange-array-alternating-positive-negative-
+ * items -o1-extra-space/
  * 
  * @author shaskant
  *
@@ -70,13 +69,6 @@ public class RearrancePosNegAlternatively {
 		// STAGE: 2 <end>
 	}
 
-	private void rightrotate(int arr[], int n, int outofplace, int cur) {
-		int tmp = arr[cur];
-		for (int i = cur; i > outofplace; i--)
-			arr[i] = arr[i - 1];
-		arr[outofplace] = tmp;
-	}
-
 	/**
 	 * NOTE: maintains order of appearance. <br/>
 	 * Algo tries to store neg @ odd location and pos @ even location
@@ -103,7 +95,7 @@ public class RearrancePosNegAlternatively {
 						|| ((arr[index] < 0) && (arr[outofplace] >= 0))) {
 					rightrotate(arr, n, outofplace, index);
 
-					//index is pointing to last good location
+					// index is pointing to last good location
 					if (index - outofplace > 2)
 						outofplace = outofplace + 2;
 					else
@@ -120,12 +112,19 @@ public class RearrancePosNegAlternatively {
 			}
 		}
 	}
+
+	private void rightrotate(int arr[], int n, int outofplace, int curIndx) {
+		int tmp = arr[curIndx];
+		for (int i = curIndx; i > outofplace; i--)
+			arr[i] = arr[i - 1];
+		arr[outofplace] = tmp;
+	}
+
 }
 
 /**
- * WHY  			if (index - outofplace > 2)
-						outofplace = outofplace + 2;  ?
- * Take the example given in article above: [...-3, -4, -5, 6...] <br/>
+ * WHY if (index - outofplace > 2) outofplace = outofplace + 2; ? Take the
+ * example given in article above: [...-3, -4, -5, 6...] <br/>
  * Lets say -3 is outOfPlace with index "k" (k will be odd), then next positive
  * number is 6 with index "k+3". <br/>
  * Now we will right rotate numbers from -3 to 6 as below:<br/>
@@ -139,7 +138,7 @@ public class RearrancePosNegAlternatively {
  * After right rotate, index k will be good and there are at least 2 <br/>
  * negative numbers afterwards. <br/>
  * Since k is positive now, position "k+1" with a negative number is good.<br/>
- * Then "k+2" position is also negative which is not good and this is the next <br/>
+ * But then "k+2" position is also negative which is not good and so this is the next <br/>
  * outOfPlace position. <br/>
  * 
  */

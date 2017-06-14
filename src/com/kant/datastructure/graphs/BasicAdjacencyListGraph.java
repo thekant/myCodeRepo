@@ -27,8 +27,17 @@ public class BasicAdjacencyListGraph {
 	}
 
 	// Function to add an edge into the graph
-	void addEdge(int v, int w) {
+	public void addEdge(int v, int w) {
 		adj[v].add(w);
+		adj[w].add(v);
+	}
+	
+	public int getSize() {
+		return V;
+	}
+	
+	public Iterator<Integer> getAdjacency(int src){
+		return adj[src].iterator();
 	}
 
 	/**
@@ -90,19 +99,19 @@ public class BasicAdjacencyListGraph {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		BasicAdjacencyListGraph g = new BasicAdjacencyListGraph(4);
+		BasicAdjacencyListGraph g = new BasicAdjacencyListGraph(5);
 
 		g.addEdge(0, 1);
 		g.addEdge(0, 2);
 		g.addEdge(1, 2);
-		g.addEdge(2, 0);
 		g.addEdge(2, 3);
-		g.addEdge(3, 3);
+		g.addEdge(3, 4);
+		g.addEdge(1, 4);
 
 		System.out.println("Following is Breadth First Traversal "
 				+ "(starting from vertex 2)");
 
-		g.BFS(2);
+		g.BFS(4);
 	}
 
 }

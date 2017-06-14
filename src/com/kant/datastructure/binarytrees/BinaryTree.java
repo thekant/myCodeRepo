@@ -72,8 +72,17 @@ public abstract class BinaryTree<T> {
 		return 0;
 	}
 
+	private class TheHeight {
+		int value = 0;
+	}
+
 	/**
 	 * calculates height along with the diameter<br/>
+	 * 
+	 * Diameter of tree is defined as A longest path or route between any two
+	 * nodes in a tree. The path may or may not for through the root.
+	 * Maximum(Diameter of left subtree, Diameter of right subtree, Longest path
+	 * between two nodes which passes through the root.)
 	 * 
 	 * O(n)
 	 */
@@ -89,7 +98,7 @@ public abstract class BinaryTree<T> {
 		int ldiameter = diameter(root.getLeft(), lh);
 		int rdiameter = diameter(root.getRight(), rh);
 
-		theHeight.value = Math.max(lh.value, rh.value) + 1;
+		theHeight.value = 1 + Math.max(lh.value, rh.value);
 		return Math
 				.max(lh.value + rh.value + 1, Math.max(ldiameter, rdiameter));
 
@@ -100,10 +109,6 @@ public abstract class BinaryTree<T> {
 	 */
 	public int getDiameter() {
 		return diameter(root, new TheHeight());
-	}
-
-	class TheHeight {
-		int value = 0;
 	}
 
 	/**
@@ -219,13 +224,24 @@ public abstract class BinaryTree<T> {
 		}
 	}
 
+	/**
+	 * to print left view of tree.
+	 */
 	public void printLeftView() {
 		leftViewUtil(root, 0);
 	}
 
-	private static int max_level = 0;
+	private static int max_level = -1;
 
-	// recursive function to print left view
+	/**
+	 * Recursive function to print left view
+	 * 
+	 * change order from [left -> right] to [right -> left] it print right view
+	 * of tree.
+	 * 
+	 * @param node
+	 * @param level
+	 */
 	private void leftViewUtil(TreeNode<T> node, int level) {
 		// Base Case
 		if (node == null)
@@ -285,22 +301,24 @@ public abstract class BinaryTree<T> {
 	 * http://www.geeksforgeeks.org/construct-a-binary-tree-from-postorder-and
 	 * -inorder/
 	 * 
-	 * TO be used for build tree from INorder and Preorder traversal values.
+	 * TO be used for build tree from InOrder and PreOrder traversal values.
 	 */
 	static int preIndex = 0;
 
 	/**
-	 * Recursive function to construct binary of size len from Inorder traversal
-	 * in[] and Preorder traversal pre[]. Initial values of inStrt and inEnd
-	 * should be 0 and len - 1. The function doesn't do any error checking for
-	 * cases where inorder and preorder do not form a tree.
+	 * Recursive function to construct binary of size 'len' from InOrder
+	 * traversal in[] and PreOrder traversal pre[].
+	 * 
+	 * Initial values of inStrt and inEnd should be 0 and len - 1. The function
+	 * doesn't do any error checking for cases where inOrder and preOrder do not
+	 * form a tree.
 	 */
 	public TreeNode<T> buildTree(T in[], T pre[], int inStrt, int inEnd) {
 		if (inStrt > inEnd)
 			return null;
 
 		/**
-		 * Pick current node from Preorder traversal using preIndex and
+		 * Pick current node from PreOrder traversal using preIndex and
 		 * increment preIndex
 		 */
 		TreeNode<T> tNode = new TreeNode<>(pre[preIndex++]);
@@ -310,12 +328,12 @@ public abstract class BinaryTree<T> {
 			return tNode;
 
 		/**
-		 * Else find the index of this node in Inorder traversal
+		 * Else find the index of this node in InOrder traversal
 		 */
 		int inIndex = search(in, inStrt, inEnd, tNode.data);
 
 		/**
-		 * Using index in Inorder traversal, construct left and right subtress
+		 * Using index in InOrder traversal, construct left and right subtrees
 		 */
 		tNode.setLeft(buildTree(in, pre, inStrt, inIndex - 1));
 		tNode.setRight(buildTree(in, pre, inIndex + 1, inEnd));

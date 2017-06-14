@@ -1,5 +1,10 @@
 package com.kant.algorithms.dynamicprogramming;
 
+/**
+ * 
+ * @author shaskant
+ *
+ */
 public class LongestIncreasingSubsequence {
 
 	/**
