@@ -10,8 +10,16 @@ import java.util.List;
  * @author shashi
  * 
  */
-public class BSTTree<E extends Integer> {
+public class BSTTree<E extends Comparable<E>> {
 	private Node<E> root = null;
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Node<E> getRootOfBSTree() {
+		return root;
+	}
 
 	/**
 	 * 
@@ -28,13 +36,13 @@ public class BSTTree<E extends Integer> {
 				Node<E> prev = finder;
 				do {
 					prev = finder;
-					if (finder.getItem().intValue() > item) {
+					if (finder.getItem().compareTo(item) > 0) {
 						finder = finder.left;
 					} else
 						finder = finder.right;
 				} while (finder != null);
 
-				if (prev.getItem().intValue() > item) {
+				if (prev.getItem().compareTo(item) > 0) {
 					prev.left = new Node<E>(item, null, null, prev);
 				} else
 					prev.right = new Node<E>(item, null, null, prev);
@@ -141,8 +149,8 @@ public class BSTTree<E extends Integer> {
 	 * @return
 	 */
 	public E getLowestCommonAncestor(E item1, E item2) {
-		E maxTerm = (item1.intValue() > item2.intValue()) ? item1 : item2;
-		E minTerm = (item1.intValue() < item2.intValue()) ? item1 : item2;
+		E maxTerm = (item1.compareTo(item2) > 0) ? item1 : item2;
+		E minTerm = (item1.compareTo(item2) < 0) ? item1 : item2;
 		return getLCA(root, minTerm, maxTerm);
 	}
 
@@ -156,14 +164,14 @@ public class BSTTree<E extends Integer> {
 	 */
 	private E getLCA(Node<E> traveler, E item1, E item2) {
 		if (traveler != null) {
-			if (traveler.getItem().intValue() > item1.intValue()
-					&& traveler.getItem().intValue() > item2.intValue()) {
+			if (traveler.getItem().compareTo(item1) > 0
+					&& traveler.getItem().compareTo(item2) > 0) {
 				return getLCA(traveler.left, item1, item2);
-			} else if (traveler.getItem().intValue() < item1.intValue()
-					&& traveler.getItem().intValue() < item2.intValue()) {
+			} else if (traveler.getItem().compareTo(item1) < 0
+					&& traveler.getItem().compareTo(item2) < 0) {
 				return getLCA(traveler.right, item1, item2);
-			} else if (item1.intValue() <= traveler.getItem().intValue()
-					&& traveler.getItem().intValue() <= item2.intValue()) {
+			} else if (item1.compareTo(traveler.getItem()) <= 0
+					&& traveler.getItem().compareTo(item2) <= 0) {
 				return traveler.getItem();
 			}
 		}
@@ -193,9 +201,7 @@ public class BSTTree<E extends Integer> {
 				return false;
 
 			// Allows only distinct valued nodes
-			if (prev != null
-					&& node.getItem().intValue() <= prev.getItem()
-							.intValue())
+			if (prev != null && node.getItem().compareTo(prev.getItem()) <= 0)
 				return false;
 
 			prev = node;

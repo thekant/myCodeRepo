@@ -1,0 +1,9 @@
+Tree properties:
+----------------
+1. l = t + 1  //l leaves t internal nodes
+2. l + t = n  // n total number of leaves
+3. 2*l = n + 1 // always holds true
+4.  L = (k - 1)*I + 1
+	Where L = Number of leaf nodes
+          I = Number of internal nodes
+5.  

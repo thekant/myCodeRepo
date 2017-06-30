@@ -7,7 +7,7 @@ package com.kant.datastructure.binarytrees.more;
  * 
  * @param <E>
  */
-public class Node<E extends Number> {
+public class Node<E> {
 	private E item;
 	public Node<E> left = null;
 	public Node<E> right = null;
@@ -29,7 +29,6 @@ public class Node<E extends Number> {
 	 * @param parent
 	 */
 	public Node(E item, Node<E> left, Node<E> right, Node<E> parent) {
-		super();
 		this.item = item;
 		this.left = left;
 		this.right = right;
