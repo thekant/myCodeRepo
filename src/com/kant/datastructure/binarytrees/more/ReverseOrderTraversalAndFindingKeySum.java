@@ -31,13 +31,16 @@ public class ReverseOrderTraversalAndFindingKeySum {
 
 		plateform.printReverseLevelOrder();
 		System.out.println();
+		plateform.multiLineSpiralLevelOrder();
+		System.out.println();
 		plateform.printNormalLevelOrder();
 		System.out.println();
 		plateform.multiLineNormalLevelOrder();
-
+		System.out.println();
 		System.out.println(plateform.isBst(plateform.getTree()));
-		// plateform.traverseReverseInorder();
-		// plateform.findKeySum(39);
+		plateform.traverseInorder();
+		System.out.println();
+		plateform.findKeySum(39);
 	}
 
 	/**
@@ -69,12 +72,12 @@ public class ReverseOrderTraversalAndFindingKeySum {
 	}
 
 	/**
-	 * can be modified to spiral level order. using one queue and other as stack
-	 * with insertion to stack from right to left
+	 * can be modified to spiral level order. Use 2 stacks for spiral order
 	 * 
 	 * @throws InterruptedException
 	 */
 	public void multiLineNormalLevelOrder() {
+		System.out.println("Level order output(mutliline): ");
 		List<TreeNode> queue1 = new ArrayList<TreeNode>();
 		List<TreeNode> queue2 = new ArrayList<TreeNode>();
 		queue1.add(root);
@@ -107,37 +110,74 @@ public class ReverseOrderTraversalAndFindingKeySum {
 	/**
 	 * 
 	 */
-	public void printReverseLevelOrder() {
-		TreeNode crawler = null;
-		List<TreeNode> queue = new ArrayList<TreeNode>();
-		List<TreeNode> stack = new ArrayList<TreeNode>();
-		queue.add(root);
-		while (!queue.isEmpty()) {
-			crawler = queue.remove(0);
-			stack.add(stack.size(), crawler);
-
-			if (crawler.right != null) {
-				queue.add(crawler.right);
+	public void multiLineSpiralLevelOrder() {
+		System.out.println("Spiral Order Output:  ");
+		Stack<TreeNode> stack1 = new Stack<TreeNode>();
+		Stack<TreeNode> stack2 = new Stack<TreeNode>();
+		stack1.add(root);
+		boolean bothEmpty = false;
+		while (!bothEmpty) {
+			bothEmpty = true;
+			while (!stack1.isEmpty()) {
+				TreeNode next = stack1.pop();
+				System.out.print(next.data + " ");
+				if (next.left != null)
+					stack2.add(next.left);
+				if (next.right != null)
+					stack2.add(next.right);
+				bothEmpty = false;
 			}
+			System.out.println();
+			while (!stack2.isEmpty()) {
+				TreeNode next = stack2.pop();
+				System.out.print(next.data + " ");
+				if (next.right != null)
+					stack1.add(next.right);
+				if (next.left != null)
+					stack1.add(next.left);
 
-			if (crawler.left != null) {
-				queue.add(crawler.left);
+				bothEmpty = false;
 			}
-		}
-		System.out.print("Reverse Level Order: ");
-		while (!stack.isEmpty()) {
-			System.out.print(stack.remove(stack.size() - 1).data + " ");
+			System.out.println();
 		}
 	}
 
 	/**
-	 * one liner printing.
+	 * revert output wrt normal level order traversal.
+	 */
+	public void printReverseLevelOrder() {
+		System.out.println("Reverse level order output: ");
+		TreeNode crawler = null;
+		List<TreeNode> queue = new ArrayList<TreeNode>();
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			crawler = queue.remove(0);
+			stack.add(crawler);
+
+			if (crawler.left != null) {
+				queue.add(crawler.left);
+			}
+			if (crawler.right != null) {
+				queue.add(crawler.right);
+			}
+		}
+		while (!stack.isEmpty()) {
+			System.out.print(stack.pop().data + " ");
+		}
+	}
+
+	/**
+	 * One liner printing.
+	 * 
+	 * TODO can be made multiliner. By finishing up at each level add a marker
+	 * element(null) to mark end of a level.
 	 */
 	public void printNormalLevelOrder() {
+		System.out.println("Level order output: ");
 		TreeNode crawler = null;
 		List<TreeNode> queue = new ArrayList<TreeNode>();
 		queue.add(root);
-		System.out.print("Level Order: ");
 		while (!queue.isEmpty()) {
 			crawler = queue.remove(0);
 			System.out.print(crawler.data + " ");
@@ -219,13 +259,14 @@ public class ReverseOrderTraversalAndFindingKeySum {
 			} else {
 				break;
 			}
-
 		}
 		System.out.println("No such pair exists");
 	}
 
 	/**
 	 * Iterative in-order traversal.
+	 * 
+	 * O(N) 
 	 */
 	public void traverseInorder() {
 		Stack<TreeNode> stack = new Stack<>();
@@ -244,7 +285,11 @@ public class ReverseOrderTraversalAndFindingKeySum {
 	}
 
 	/**
-	 * traverse Reverse order [R N L]
+	 * traverse Reverse order [R N L]<br/>
+	 * NOTE: each step of the outer while loop ..leads to next greatest value
+	 * which smaller than previous.
+	 * 
+	 * O(N) on an average run over all nodes of tree.
 	 */
 	public void traverseReverseInorder() {
 		Stack<TreeNode> stack = new Stack<>();

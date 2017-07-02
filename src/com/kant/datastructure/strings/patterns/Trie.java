@@ -18,15 +18,15 @@ public class Trie {
 	}
 
 	public void insert(String key) {
-		root.insert(key, 0);
+		root.insert(key);
 	}
 
 	public boolean search(String word) {
-		return root.search(word, 0);
+		return root.search(word);
 	}
 
 	public void remove(String key) {
-		root.remove(key, 0);
+		root.removeKey(key);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class Trie {
 		// trie.remove("welcome12");
 		trie.remove("welcome123");
 
-		System.out.println(trie.search("welcome123"));
+		System.out.println(trie.search("welcome"));
 	}
 
 }

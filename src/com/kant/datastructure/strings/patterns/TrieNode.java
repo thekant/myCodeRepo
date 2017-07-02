@@ -26,15 +26,15 @@ public class TrieNode {
 	 * @param key
 	 * @param index
 	 */
-	public void insert(String key, int index) {
-		if (index == key.length()) {
+	public void insert(String key) {
+		if (key.isEmpty()) {
 			leaf = true;
 			return;
 		}
-		if (!children.containsKey(key.charAt(index))) {
-			children.put(key.charAt(index), new TrieNode());
+		if (!children.containsKey(key.charAt(0))) {
+			children.put(key.charAt(0), new TrieNode());
 		}
-		children.get(key.charAt(index)).insert(key, index + 1);
+		children.get(key.charAt(0)).insert(key.substring(1));
 	}
 
 	/**
@@ -43,12 +43,12 @@ public class TrieNode {
 	 * @param index
 	 * @return
 	 */
-	public boolean search(String key, int index) {
-		if (index == key.length())
+	public boolean search(String key) {
+		if (key.isEmpty())
 			return isLeaf();
-		if (!children.containsKey(key.charAt(index)))
+		if (!children.containsKey(key.charAt(0)))
 			return false;
-		return children.get(key.charAt(index)).search(key, index + 1);
+		return children.get(key.charAt(0)).search(key.substring(1));
 	}
 
 	/**
@@ -58,28 +58,28 @@ public class TrieNode {
 	 * @return true (if child returned true then parent has to act on this) <br/>
 	 *         false (ignore)
 	 */
-	public boolean remove(String key, int index) {
+	public boolean removeKey(String key) {
 		// base case
-		if (index == key.length()) {
+		if (key.isEmpty()) {
 			// key is found
 			if (isLeaf()) {
 				// if no children then parent should remove entry
 				if (children.size() == 0) {
 					return true;
 				}
-				leaf = false;//unmark
+				leaf = false; // unmark
 			}
 			return false;
 		}
-		
-		//key is not found 
-		if (!children.containsKey(key.charAt(index)))
+
+		// key is not found
+		if (!children.containsKey(key.charAt(0)))
 			return false;
 
-		if (children.get(key.charAt(index)).remove(key, index + 1)) {
-			//remove entry
-			children.remove(key.charAt(index));
-			//if no child and is not marked as leaf for a substring of the key
+		if (children.get(key.charAt(0)).removeKey(key.substring(1))) {
+			// remove entry
+			children.remove(key.charAt(0));
+			// if no child and is not marked as leaf for a substring of the key
 			if (children.size() == 0) {
 				if (!isLeaf())
 					return true;

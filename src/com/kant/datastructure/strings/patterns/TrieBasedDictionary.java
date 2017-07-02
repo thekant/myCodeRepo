@@ -145,9 +145,9 @@ class DTrieNode {
 				return true;
 			int first = text.charAt(0);
 			if (children[first] != null) {
-				if (text.length() == 1) {
-					return true;
-				}
+				/*
+				 * if (text.length() == 1) { return true; }
+				 */
 				return children[first].isValidPrefix(text.substring(1));
 			}
 		}

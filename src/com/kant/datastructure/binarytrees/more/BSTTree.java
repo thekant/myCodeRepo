@@ -183,10 +183,12 @@ public class BSTTree<E extends Comparable<E>> {
 	 * @return
 	 */
 	public boolean isBSTTree() {
-		return isBST(root);
+		@SuppressWarnings("unchecked")
+		Node<E>[] prevN = new Node[1];
+		return isBST(root, prevN);
 	}
 
-	private Node<E> prev = null; // for BST property
+	// private Node<E> prev = null; // for BST property
 
 	/**
 	 * Logic to find if tree maintains BST property.
@@ -194,19 +196,20 @@ public class BSTTree<E extends Comparable<E>> {
 	 * @param node
 	 * @return
 	 */
-	private boolean isBST(Node<E> node) {
+	private boolean isBST(Node<E> node, Node<E>[] prevN) {
 		// traverse the tree in inOrder fashion and keep track of prev node
 		if (node != null) {
-			if (!isBST(node.left))
+			if (!isBST(node.left, prevN))
 				return false;
 
 			// Allows only distinct valued nodes
-			if (prev != null && node.getItem().compareTo(prev.getItem()) <= 0)
+			if (prevN[0] != null
+					&& node.getItem().compareTo(prevN[0].getItem()) <= 0)
 				return false;
 
-			prev = node;
+			prevN[0] = node;
 
-			return isBST(node.right);
+			return isBST(node.right, prevN);
 		}
 
 		return true;

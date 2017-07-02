@@ -81,7 +81,6 @@ public class BSTIterator<E> implements Iterator<Node<E>> {
 		tree.insertToBStTree(3);
 		tree.insertToBStTree(4);
 		tree.insertToBStTree(5);
-
 		System.out
 				.println("--------Print test tree<level order>------------------");
 		Iterator<List<Node<Integer>>> iterator = tree.getListOfLevels()
@@ -93,6 +92,7 @@ public class BSTIterator<E> implements Iterator<Node<E>> {
 			}
 			System.out.println();
 		}
+		System.out.println(tree.isBSTTree());
 		System.out.println("--------------------------");
 		return tree;
 	}
