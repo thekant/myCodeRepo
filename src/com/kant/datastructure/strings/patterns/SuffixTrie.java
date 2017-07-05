@@ -78,7 +78,7 @@ public class SuffixTrie {
 		}
 
 		System.out.println(trie.countDistinctSubStrings());
-		// trie.printSuffixTrie();
+		//trie.printSuffixTrie();
 
 		printAllSubstrings("ababa");
 	}
